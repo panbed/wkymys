@@ -11,6 +11,7 @@ transparency = 1
 material = SubResource("StandardMaterial3D_3vyb7")
 
 [sub_resource type="SystemFont" id="SystemFont_3vyb7"]
+subpixel_positioning = 0
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
@@ -34,4 +35,8 @@ offset = Vector2(0, 50)
 font = SubResource("SystemFont_3vyb7")
 font_size = 64
 
+[node name="SafeAfterDeathTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="SafeAfterDeathTimer" to="." method="_on_safe_after_death_timer_timeout"]

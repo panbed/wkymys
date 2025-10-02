@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @export var grid_map: GridMap
 @onready var death_timer: Timer = $DeathTimer
+@onready var safe_after_death_timer: Timer = $SafeAfterDeathTimer
 @onready var debug_label: Label3D = $DebugLabel
 
 var tile_names = {
@@ -20,6 +21,8 @@ var wet_tiles: = {}
 @export var friction = 15.0
 
 var dead: bool = false
+var can_move: bool = true
+
 var last_safe_position: Vector3 = Vector3.ZERO
 
 func _physics_process(delta: float) -> void:
@@ -52,12 +55,13 @@ func _physics_process(delta: float) -> void:
 		#velocity.z = move_toward(velocity.z, 0, speed)
 		velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
 
-	move_and_slide()
+	if can_move == true:
+		move_and_slide()
 		
 func _on_death_timer_timeout() -> void:
 	# player died, start ghost timer
 	self.set_collision_mask_value(2, true)
-	debug_text("alive again")
+	debug_text("alive again", 0.5)
 	respawn()
 	
 	
@@ -69,6 +73,7 @@ func die(death_type: String) -> void:
 	dead = true
 	debug_text("died")
 	
+	# when we're a ghost we can phase through walls, so disable the "wall" mask
 	self.set_collision_mask_value(2, false)
 	match death_type:
 		"water":
@@ -80,9 +85,16 @@ func respawn():
 	dead = false
 	global_transform.origin = last_safe_position
 	
-func debug_text(text: String):
-	debug_label.text = text
-	await get_tree().create_timer(1.0).timeout
-	debug_label.text = ""
+	can_move = false
+	safe_after_death_timer.start()
 	
+	
+func debug_text(text: String, time: float = 1):
+	debug_label.text = text
+	await get_tree().create_timer(time).timeout
+	debug_label.text = ""
+
+func _on_safe_after_death_timer_timeout() -> void:
+	can_move = true
+	debug_text("can move again", 1)
 	
