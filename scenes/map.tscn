@@ -1,0 +1,96 @@
+[gd_scene load_steps=8 format=3 uid="uid://x5ki3fcapyx6"]
+
+[ext_resource type="MeshLibrary" uid="uid://dj6erelcl4gq7" path="res://dumb.tres" id="1_wijl4"]
+[ext_resource type="Texture2D" uid="uid://fpmojb5f3n6c" path="res://sprites/ghosty.png" id="2_e0an3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wijl4"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_e0an3"]
+sky_material = SubResource("ProceduralSkyMaterial_wijl4")
+
+[sub_resource type="Environment" id="Environment_p5pve"]
+background_mode = 2
+sky = SubResource("Sky_e0an3")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="GDScript" id="GDScript_p5pve"]
+resource_name = "Ghosty"
+script/source = "extends CharacterBody3D
+
+
+const SPEED = 5.0
+const JUMP_VELOCITY = 4.5
+@onready var sprite_3d: Sprite3D = $Sprite3D
+
+
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Handle jump.
+	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	#var input_dir := Input.get_vector(\"ui_left\", \"ui_right\", \"ui_up\", \"ui_down\")
+	var input_dir := Vector2(Input.get_action_strength(\"ui_left\") - Input.get_action_strength(\"ui_right\"),
+		Input.get_action_strength(\"ui_up\") - Input.get_action_strength(\"ui_down\") 
+	)
+	var direction := Vector3(input_dir.x,0,input_dir.y).normalized()
+	if input_dir.x > 0:
+		sprite_3d.scale.x = abs(sprite_3d.scale.x)
+	elif input_dir.x <0:
+		sprite_3d.scale.x = -abs(sprite_3d.scale.x)
+		
+	if direction:
+		velocity.x = direction.x * SPEED
+		velocity.z = direction.z * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
+
+	move_and_slide()
+"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_urblq"]
+radius = 0.6
+height = 4.8
+
+[node name="Map" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p5pve")
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("1_wijl4")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65527, 2, 1, 65529, 2, 1, 65531, 2, 1, 65533, 2, 1, 65535, 2, 1, 1, 2, 1, -65541, 0, 0, -65537, 0, 0, -65545, 0, 0, -65537, 65533, 0, -65541, 65533, 0, -65545, 65533, 0, -65537, 65530, 0, -65541, 65530, 0, -65545, 65530, 0, -65557, 65530, 0, -65557, 65533, 0, -65557, 0, 0, 65515, 2, 1, 65517, 2, 1, -65553, 65530, 0, -65553, 65533, 0, -65553, 0, 0, 65519, 2, 1, 65521, 2, 1, -65549, 65530, 0, -65549, 65533, 0, -65549, 0, 0, 65523, 2, 1, 65525, 2, 1)
+}
+metadata/_editor_floor_ = Vector3(0, -8, 0)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(-0.35177174, 0, -0.23849875, 0, 0.425, 0, 0.23849875, 0, -0.35177174, -2.72289, 2.1543844, -4.338105)
+script = SubResource("GDScript_p5pve")
+
+[node name="Sprite3D" type="Sprite3D" parent="CharacterBody3D"]
+transform = Transform3D(-0.98713636, -0.025561994, 0.15782452, 0, 0.98713624, 0.15988119, -0.1598812, 0.15782452, -0.97443795, 0, 0, 0)
+billboard = 2
+texture = ExtResource("2_e0an3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000004, 4.7683716e-07, -0.12339258, -9.536743e-07)
+shape = SubResource("CapsuleShape3D_urblq")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.9870018, -0.025832785, 0.15861948, 0, 0.9869964, 0.16074234, -0.16070928, 0.15865298, -0.9741672, -3.3608644, 3.1180038, -14.063372)
+size = 18.475
