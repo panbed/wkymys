@@ -70,3 +70,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.9506845, 0, 11.177887)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Area3D"]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 shape = SubResource("BoxShape3D_rwgxs")
+
+[node name="Interactables" type="Node" parent="."]

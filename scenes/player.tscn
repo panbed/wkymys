@@ -1,28 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://dihhxrtwoq3o5"]
+[gd_scene load_steps=5 format=3 uid="uid://dihhxrtwoq3o5"]
 
 [ext_resource type="Script" uid="uid://b63k55wvnl66g" path="res://scenes/player.gd" id="1_3vyb7"]
+[ext_resource type="Texture2D" uid="uid://gfgffufbojyc" path="res://images/player_mortal.png" id="2_g2els"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3vyb7"]
-transparency = 1
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_3vyb7"]
-material = SubResource("StandardMaterial3D_3vyb7")
 
 [sub_resource type="SystemFont" id="SystemFont_3vyb7"]
 subpixel_positioning = 0
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+top_level = true
 collision_mask = 3
 script = ExtResource("1_3vyb7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_u8vuu")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_3vyb7")
 
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 5.0
@@ -37,6 +30,15 @@ font_size = 64
 
 [node name="SafeAfterDeathTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.0018
+billboard = 1
+texture = ExtResource("2_g2els")
+
+[node name="PowerLabel" type="Label3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.67498386, 0.005879402, 0)
+font_size = 64
 
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="SafeAfterDeathTimer" to="." method="_on_safe_after_death_timer_timeout"]

@@ -1,9 +1,14 @@
 extends CharacterBody3D
 
+const PowerType = preload("uid://c7iq8laid2oq5").PowerType
+var active_power: PowerType = PowerType.NONE
+
 @export var grid_map: GridMap
 @onready var death_timer: Timer = $DeathTimer
 @onready var safe_after_death_timer: Timer = $SafeAfterDeathTimer
 @onready var debug_label: Label3D = $DebugLabel
+@onready var sprite_3d: Sprite3D = $Sprite3D
+@onready var power_label: Label3D = $PowerLabel
 
 var tile_names = {
 	"floor": 0,
@@ -14,7 +19,7 @@ var tile_names = {
 var dangerous_tiles: Array[String] = ["water"]
 
 # tiles that are wet, which will make the player run faster (or "slip")
-var wet_tiles: = {}
+var tiles_data: = {}
 
 @export var speed = 5.0
 @export var acceleration = 10.0
@@ -25,15 +30,43 @@ var can_move: bool = true
 
 var last_safe_position: Vector3 = Vector3.ZERO
 
+func vector3i_to_str(v: Vector3i) -> String:
+	return str(v.x) + "," + str(v.y) + "," + str(v.z)
+	
+func str_to_vector3i(s: String) -> Vector3i:
+	var parts = s.split(",")
+	if parts.size() != 3:
+		print("Invalid Vector3i string!")
+		return Vector3.ZERO
+	
+	var x = int(parts[0])
+	var y = int(parts[1])
+	var z = int(parts[2])
+	return Vector3i(x, y, z)
+	
+
 func _physics_process(delta: float) -> void:
+	# DEBUG: change text of power label
+	match active_power:
+		PowerType.NONE:
+			power_label.text = "None"
+		PowerType.FIRE:
+			power_label.text = "Fire"
+		PowerType.WATER:
+			power_label.text = "Water"
+		PowerType.ELECTRIC:
+			power_label.text = "Electric"
+		_:
+			power_label.text = "????????"
+
 	# get the current tile underneath the player
 	var tile_pos = grid_map.local_to_map(global_transform.origin)
 	tile_pos.y -= 1
 	var tile_id = grid_map.get_cell_item(tile_pos)
 	
 	if tile_id == tile_names["water"]:
-		death_timer.start()
-		die("")
+		# death_timer.start()
+		die(PowerType.WATER)
 	else:
 		if death_timer.time_left == 0:
 			print("setting safe pos")
@@ -42,6 +75,27 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+		
+	var tile_pos_str = vector3i_to_str(tile_pos)
+		
+	# handle powers
+	match active_power:
+		PowerType.WATER:
+			print("WATER POWER ACTIVE")
+			# leaving a trail of water will set that tile as wet
+			if tile_pos is Vector3i:
+				tiles_data[tile_pos_str] = "wet"	
+	
+	if dead == false and tile_pos_str in tiles_data and tiles_data[tile_pos_str] == "wet":
+		speed = 10.0
+		friction = 1.0
+	else:
+		speed = 5.0
+		friction = 15.0
+
+	# if the user presses the "death" button, die
+	if Input.is_action_just_pressed("ghost"):
+		die(PowerType.NONE)
 
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("left", "right", "up", "down")
@@ -57,18 +111,20 @@ func _physics_process(delta: float) -> void:
 
 	if can_move == true:
 		move_and_slide()
-		
+
 func _on_death_timer_timeout() -> void:
 	# player died, start ghost timer
 	self.set_collision_mask_value(2, true)
 	debug_text("alive again", 0.5)
 	respawn()
 	
-	
-func die(death_type: String) -> void:
+func die(death_type: PowerType) -> void:
 	if dead == true:
-		print("you cant die again bro")
 		return
+
+	death_timer.start()
+		
+	sprite_3d.texture = preload("uid://bv8fju4tqp14c")
 		
 	dead = true
 	debug_text("died")
@@ -76,18 +132,21 @@ func die(death_type: String) -> void:
 	# when we're a ghost we can phase through walls, so disable the "wall" mask
 	self.set_collision_mask_value(2, false)
 	match death_type:
-		"water":
-			print("water death")
+		PowerType.WATER:
+			active_power = PowerType.WATER
 		_:
 			print("idk")
+
 			
 func respawn():
+	sprite_3d.texture = preload("uid://gfgffufbojyc")
 	dead = false
+	active_power = PowerType.NONE
 	global_transform.origin = last_safe_position
 	
 	can_move = false
 	safe_after_death_timer.start()
-	
+
 	
 func debug_text(text: String, time: float = 1):
 	debug_label.text = text
@@ -96,5 +155,7 @@ func debug_text(text: String, time: float = 1):
 
 func _on_safe_after_death_timer_timeout() -> void:
 	can_move = true
+	
 	debug_text("can move again", 1)
+	
 	
