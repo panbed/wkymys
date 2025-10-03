@@ -9,6 +9,7 @@ var active_power: PowerType = PowerType.NONE
 @onready var debug_label: Label3D = $DebugLabel
 @onready var sprite_3d: Sprite3D = $Sprite3D
 @onready var power_label: Label3D = $PowerLabel
+@onready var raycast_3d: RayCast3D = $RayCast3D
 
 var tile_names = {
 	"floor": 0,
@@ -29,6 +30,7 @@ var dead: bool = false
 var can_move: bool = true
 
 var last_safe_position: Vector3 = Vector3.ZERO
+var last_input_direction: Vector3 = Vector3.FORWARD
 
 func vector3i_to_str(v: Vector3i) -> String:
 	return str(v.x) + "," + str(v.y) + "," + str(v.z)
@@ -69,7 +71,7 @@ func _physics_process(delta: float) -> void:
 		die(PowerType.WATER)
 	else:
 		if death_timer.time_left == 0:
-			print("setting safe pos")
+			# print("setting safe pos")
 			last_safe_position = global_transform.origin
 	
 	# Add the gravity.
@@ -77,6 +79,10 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 		
 	var tile_pos_str = vector3i_to_str(tile_pos)
+
+	# DEBUG: print tile info when g button is pressed
+	if Input.is_action_just_pressed("debug"):
+		print("Tile pos: ", tile_pos, " Tile ID: ", tile_id)
 		
 	# handle powers
 	match active_power:
@@ -97,10 +103,22 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ghost"):
 		die(PowerType.NONE)
 
-	# Get the input direction and handle the movement/deceleration.
+	# also if the player presses the "interact" button, check if we hit something on the raycast3d
+	if Input.is_action_just_pressed("interact"):
+		print("interact pressed")
+		if raycast_3d.is_colliding():
+			print("raycast is colliding")
+			var collider = raycast_3d.get_collider()
+			print(collider)
+			if collider is Interactable:
+				(collider as Interactable).interact(self)
+
+	# get the input direction and handle the movement/deceleration,
+	# as well as change the raycast direction to match the last input direction
 	var input_dir := Input.get_vector("left", "right", "up", "down")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction.length_squared() > 0.001:
+		last_input_direction = direction
 		#velocity.x = direction.x * speed
 		#velocity.z = direction.z * speed
 		velocity = velocity.move_toward(direction * speed, speed)
@@ -108,6 +126,8 @@ func _physics_process(delta: float) -> void:
 		#velocity.x = move_toward(velocity.x, 0, speed)
 		#velocity.z = move_toward(velocity.z, 0, speed)
 		velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
+	
+	raycast_3d.target_position = last_input_direction.normalized() * 4.0
 
 	if can_move == true:
 		move_and_slide()
@@ -124,6 +144,7 @@ func die(death_type: PowerType) -> void:
 
 	death_timer.start()
 		
+	# set sprite to ghost
 	sprite_3d.texture = preload("uid://bv8fju4tqp14c")
 		
 	dead = true
@@ -134,6 +155,13 @@ func die(death_type: PowerType) -> void:
 	match death_type:
 		PowerType.WATER:
 			active_power = PowerType.WATER
+		PowerType.ELECTRIC:
+			print("electric death")
+			active_power = PowerType.ELECTRIC
+		PowerType.FIRE:
+			active_power = PowerType.FIRE
+		PowerType.NONE:
+			active_power = PowerType.NONE
 		_:
 			print("idk")
 
@@ -157,5 +185,3 @@ func _on_safe_after_death_timer_timeout() -> void:
 	can_move = true
 	
 	debug_text("can move again", 1)
-	
-	

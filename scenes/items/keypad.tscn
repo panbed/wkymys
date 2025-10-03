@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuslu0eckdr6n"]
+
+[ext_resource type="Texture2D" uid="uid://bmamaihiwnuvk" path="res://images/keypad.png" id="1_a2dm1"]
+[ext_resource type="Script" uid="uid://cxk0iwrc83rpc" path="res://scripts/Keypad.gd" id="2_a2dm1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dywbp"]
+
+[node name="PowerSocket" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6039727, 2.7811484, 1.9410772)
+pixel_size = 0.0025
+texture = ExtResource("1_a2dm1")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.228261, 0.8034828, 1.0906572)
+script = ExtResource("2_a2dm1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2095499, 0, 0)
+shape = SubResource("BoxShape3D_dywbp")
+debug_color = Color(0.7078504, 0.48789626, 0, 0.41960785)

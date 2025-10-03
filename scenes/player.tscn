@@ -40,5 +40,10 @@ texture = ExtResource("2_g2els")
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.67498386, 0.005879402, 0)
 font_size = 64
 
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(2, -1, 0)
+collide_with_areas = true
+collide_with_bodies = false
+
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="SafeAfterDeathTimer" to="." method="_on_safe_after_death_timer_timeout"]

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddkw0bd0wyxbm"]
+
+[ext_resource type="Texture2D" uid="uid://duhgqlnarnrca" path="res://images/warning.png" id="1_4gchi"]
+[ext_resource type="Script" uid="uid://d1tispckg34jd" path="res://scripts/BrokenPowerSocket.gd" id="2_41rpx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dywbp"]
+
+[node name="PowerSocket" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6039727, 2.7811484, 1.9410772)
+pixel_size = 0.0025
+texture = ExtResource("1_4gchi")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.228261, 0.8034828, 1.0906572)
+script = ExtResource("2_41rpx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2095499, 0, 0)
+shape = SubResource("BoxShape3D_dywbp")
+debug_color = Color(0.7078504, 0.48789626, 0, 0.41960785)
