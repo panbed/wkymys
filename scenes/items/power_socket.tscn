@@ -1,14 +1,116 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddkw0bd0wyxbm"]
+[gd_scene load_steps=12 format=4 uid="uid://ddkw0bd0wyxbm"]
 
 [ext_resource type="Texture2D" uid="uid://duhgqlnarnrca" path="res://images/warning.png" id="1_4gchi"]
 [ext_resource type="Script" uid="uid://d1tispckg34jd" path="res://scripts/BrokenPowerSocket.gd" id="2_41rpx"]
+[ext_resource type="Texture2D" uid="uid://ewagwjbekva7" path="res://models/HighVoltage_cheebra.png" id="3_v418w"]
+[ext_resource type="Texture2D" uid="uid://y0s5ekv655m3" path="res://models/HighVoltage_2025-10-03-015428_hyprshot.png" id="4_s1y3c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dywbp"]
+size = Vector3(1, 1, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xa7uj"]
+resource_name = "Cheebra"
+cull_mode = 2
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mh8c6"]
+resource_name = "Cheebruh"
+cull_mode = 2
+albedo_texture = ExtResource("3_v418w")
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vqcnv"]
+resource_name = "danger"
+cull_mode = 2
+albedo_texture = ExtResource("4_s1y3c")
+roughness = 0.5
+texture_filter = 2
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ibakw"]
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 3, 2),
+"format": 34896613377,
+"index_count": 12,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUA"),
+"name": "Cheebra",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("AAAAAAAAAAD//wAA//8AAP//AAAAAAAAAAAAAP//AAD/////AAAAAAAA/////wAAAAD//wAAAAD///////8AAA==")
+}, {
+"aabb": AABB(-1, -1, -1, 2, 0.29999995, 2),
+"format": 34896613377,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAAAAIAAwAFAAEABAACAAYAAwAHAAUABwAEAAYABwAGAAUA"),
+"name": "Cheebruh",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("//8AAP//AAAAAP////8AAP///////wAAAAAAAP//AAD//wAAAAAAAAAA//8AAAAA/////wAAAAAAAAAAAAAAAA==")
+}, {
+"aabb": AABB(-1, -0.70000005, -1, 2, 2.7, 2),
+"format": 34896613377,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAAAAIAAwAFAAEABAACAAYAAwAHAAUABwAEAAYABwAGAAUA"),
+"name": "danger",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("AAAAAP//AAAAAP//AAAAAAAA/////wAAAAAAAAAAAAD//wAA//8AAP////8AAAAA////////AAD//wAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_n4xcf"]
+resource_name = "HighVoltage_Cube"
+_surfaces = [{
+"aabb": AABB(-1, -1, -1, 2, 3, 2),
+"attribute_data": PackedByteArray("/x//f/9f/z//X/9//x//P/+f/3//3/8//9//f/+f/z8="),
+"format": 34896613399,
+"index_count": 12,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUA"),
+"material": SubResource("StandardMaterial3D_xa7uj"),
+"name": "Cheebra",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("AAAAAAAA/7///wAA////v///AAAAAP+/AAAAAP///7//////AAD//wAA////////AAD//wAA/////////////wAA/38AAP9/AAD/fwAA/3//f/+//3//v/9//7//f/+/")
+}, {
+"aabb": AABB(-1, -1, -1, 2, 0.29999995, 2),
+"attribute_data": PackedByteArray("/1//P2ZmAABmZv8//18AAP9f/39mZv8/Zmb/f/9f/z//X/+/Zmb/f2Zm/7//X/9//1///2Zm/79mZv///1//vw=="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0A"),
+"material": SubResource("StandardMaterial3D_mh8c6"),
+"name": "Cheebruh",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("//8AAP///78AAP//////v/////////+/AAAAAP///7///wAAAABU1f///////1TV/////wAAVNX//wAA//9U1QAAAAAAAP///////wAA//8AAP//AAD/////AAAAAP//AAAAAP//VNUAAP//AABU1QAA/////1TVAAAAAAAAVNX/////////////////////qiqqKqoqqiqqKqoqqiqqKv+//7//v/+//7//v/+//79U1VTVVNVU1VTVVNVU1VTV")
+}, {
+"aabb": AABB(-1, -0.70000005, -1, 2, 2.7, 2),
+"attribute_data": PackedByteArray("mf7n/mN/HIrn/vGKTYDn/qH///98gDyL//8IjB6Aev9G/8v/PoCKi6j/iosNgHH/uP/0/r2A34rp/2WLKoDH/g=="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0A"),
+"material": SubResource("StandardMaterial3D_vqcnv"),
+"name": "danger",
+"primitive": 3,
+"uv_scale": Vector4(2.0052257, 1.8551849, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("AAAAAP///78AAP//AAD/vwAA//////+/AAAAAAAA/78AAAAAAAD///////8AAP//AAD//wAA/////wAAAAD/////AAAAAP+//////////7//////AAD/v///AAD///+///8AAP//JYAAAP////8ugP///////z+AAAAAAP//FIB/gL7/uoCh/zmBYf//f///d4CH/4GAff+WgGf/YYCc/7B/JwDJfxoA/38AAHp/QgD/////////////////////")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ibakw")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_v418w"]
+data = PackedVector3Array(-1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1, 1, -1, 1, 1, 2, -1, -1, 2, 1, -1, 2, -1, 1, 2, -1, 1, 2, 1, -1, 2, 1, 1, -1, 1, -1, -0.7, 1, 1, -0.7, 1, 1, -1, 1, -1, -1, 1, -1, -0.7, 1, 1, -1, -1, 1, -0.7, 1, 1, -0.7, -1, 1, -1, -1, 1, -1, 1, 1, -0.7, 1, -1, -1, -1, 1, -0.7, -1, -1, -0.7, -1, -1, -1, -1, 1, -1, -1, 1, -0.7, -1, -1, -1, 1, -1, -0.7, -1, -1, -0.7, 1, -1, -1, 1, -1, -1, -1, -1, -0.7, -1, -1, -0.7, 1, -1, 2, -1, -1, 2, 1, -1, -0.7, 1, -1, -0.7, -1, -1, 2, -1, -1, -0.7, -1, 1, 2, -1, -1, 2, -1, -1, -0.7, -1, 1, -0.7, -1, 1, 2, -1, 1, -0.7, -1, 1, 2, 1, 1, 2, -1, 1, -0.7, -1, 1, -0.7, 1, 1, 2, 1, 1, -0.7, 1, -1, 2, 1, 1, 2, 1, 1, -0.7, 1, -1, -0.7, 1, -1, 2, 1)
 
 [node name="PowerSocket" type="Node3D"]
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6039727, 2.7811484, 1.9410772)
+visible = false
 pixel_size = 0.0025
 texture = ExtResource("1_4gchi")
 
@@ -17,6 +119,19 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.228261, 0.8034828, 1.090657
 script = ExtResource("2_41rpx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2095499, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2095499, 0, -1.3314619)
 shape = SubResource("BoxShape3D_dywbp")
 debug_color = Color(0.7078504, 0.48789626, 0, 0.41960785)
+
+[node name="HighVoltage" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6400181, 0.6328337, 0.91475093)
+
+[node name="Cube" type="MeshInstance3D" parent="HighVoltage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.4314106, 0, 0, 0)
+mesh = SubResource("ArrayMesh_n4xcf")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="HighVoltage/Cube"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HighVoltage/Cube/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_v418w")

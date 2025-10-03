@@ -2,7 +2,6 @@ extends CharacterBody3D
 
 const PowerType = preload("uid://c7iq8laid2oq5").PowerType
 var active_power: PowerType = PowerType.NONE
-
 @export var grid_map: GridMap
 @onready var death_timer: Timer = $DeathTimer
 @onready var safe_after_death_timer: Timer = $SafeAfterDeathTimer
@@ -10,6 +9,7 @@ var active_power: PowerType = PowerType.NONE
 @onready var sprite_3d: Sprite3D = $Sprite3D
 @onready var power_label: Label3D = $PowerLabel
 @onready var raycast_3d: RayCast3D = $RayCast3D
+
 
 var tile_names = {
 	"floor": 0,
@@ -31,7 +31,7 @@ var can_move: bool = true
 
 var last_safe_position: Vector3 = Vector3.ZERO
 var last_input_direction: Vector3 = Vector3.FORWARD
-
+	
 func vector3i_to_str(v: Vector3i) -> String:
 	return str(v.x) + "," + str(v.y) + "," + str(v.z)
 	
@@ -205,5 +205,4 @@ func debug_text(text: String, time: float = 1):
 
 func _on_safe_after_death_timer_timeout() -> void:
 	can_move = true
-	
 	debug_text("can move again", 1)
