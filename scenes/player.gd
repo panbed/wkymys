@@ -83,9 +83,9 @@ func _physics_process(delta: float) -> void:
 		
 	var tile_pos_str = vector3i_to_str(tile_pos)
 
-	# DEBUG: print tile info when g button is pressed
+	# DEBUG button:
 	if Input.is_action_just_pressed("debug"):
-		print("Tile pos: ", tile_pos, " Tile ID: ", tile_id)
+		die(PowerType.FIRE)
 		
 	# handle powers
 	match active_power:

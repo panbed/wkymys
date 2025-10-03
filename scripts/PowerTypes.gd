@@ -1,1 +1,1 @@
-enum PowerType { NONE, FIRE, WATER, ELECTRIC}
+enum PowerType { NONE, FIRE, WATER, ELECTRIC, OIL }
