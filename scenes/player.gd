@@ -76,7 +76,10 @@ func _physics_process(delta: float) -> void:
 	
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		print("not on floor")
+		print("delta is ", delta)
+		velocity.y -= 9.8 * delta
+		print("velocity.y is ", velocity.y)
 		
 	var tile_pos_str = vector3i_to_str(tile_pos)
 
@@ -117,16 +120,35 @@ func _physics_process(delta: float) -> void:
 	# as well as change the raycast direction to match the last input direction
 	var input_dir := Input.get_vector("left", "right", "up", "down")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction.length_squared() > 0.001:
-		last_input_direction = direction
-		#velocity.x = direction.x * speed
-		#velocity.z = direction.z * speed
-		velocity = velocity.move_toward(direction * speed, speed)
+	var bedVelocity
+	if not dead:
+		if direction.length_squared() > 0.001:
+			last_input_direction = direction
+			#IF YOU COMMENT OUT THESE 2 LIENS BELOW, GRAVITY WILL ONLY WORK WHEN TAPPING MOVEMENT
+			velocity.x = direction.x * speed
+			velocity.z = direction.z * speed
+			#velocity = velocity.move_toward(direction * speed, speed)
+		else:
+			#IF YOU COMMENT OUT THESE 2 LIENS BELOW, GRAVITY WILL ONLY WORK WHEN TAPPING MOVEMENT
+			velocity.x = move_toward(velocity.x, 0, speed)
+			velocity.z = move_toward(velocity.z, 0, speed)
+			#velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
 	else:
-		#velocity.x = move_toward(velocity.x, 0, speed)
-		#velocity.z = move_toward(velocity.z, 0, speed)
-		velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
-	
+		if direction.length_squared() > 0.001:
+			last_input_direction = direction
+			#IF YOU COMMENT OUT THESE 2 LIENS BELOW, GRAVITY WILL ONLY WORK WHEN TAPPING MOVEMENT
+			#velocity.x = direction.x * speed
+			#velocity.z = direction.z * speed
+			bedVelocity = velocity.move_toward(direction * speed, speed)
+		else:
+			#IF YOU COMMENT OUT THESE 2 LIENS BELOW, GRAVITY WILL ONLY WORK WHEN TAPPING MOVEMENT
+			#velocity.x = move_toward(velocity.x, 0, speed)
+			#velocity.z = move_toward(velocity.z, 0, speed)
+			bedVelocity = velocity.move_toward(Vector3.ZERO, friction * delta)
+	#PRESERVE GRAVITY(velocity.y) WITH THE BED VAR
+	if bedVelocity:
+		velocity.x = bedVelocity.x
+		velocity.z = bedVelocity.z
 	raycast_3d.target_position = last_input_direction.normalized() * 4.0
 
 	if can_move == true:
