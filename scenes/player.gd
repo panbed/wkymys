@@ -15,6 +15,8 @@ var active_power: PowerType = PowerType.NONE
 @onready var lightning_particles: GPUParticles3D = $LightningParticles
 
 
+var puddle_scene := preload("res://scenes/puddle.tscn")
+
 var tile_names = {
 	"floor": 0,
 	"stone": 7,
@@ -36,6 +38,7 @@ var can_move: bool = true
 var last_safe_position: Vector3 = Vector3.ZERO
 var last_input_direction: Vector3 = Vector3.FORWARD
 
+var last_tile_pos: Vector3i = Vector3i(0, 0, 0)
 var tile_pos: Vector3i = Vector3i(0, 0, 0)
 var tile_id: int = -1
 var tile_pos_str: String = ""
@@ -53,6 +56,16 @@ func str_to_vector3i(s: String) -> Vector3i:
 	var y = int(parts[1])
 	var z = int(parts[2])
 	return Vector3i(x, y, z)
+	
+func create_puddle(tile_pos: Vector3i):
+	var puddle = puddle_scene.instantiate()
+	var world_pos = grid_map.map_to_local(tile_pos)
+	var tile_pos_id = grid_map.get_cell_item(world_pos)
+	
+	print(tile_pos_id)
+	if tile_names["water"] != tile_pos_id:
+		puddle.global_transform.origin = world_pos + Vector3(0, 2, 0)
+		get_parent().add_child(puddle)
 	
 
 func _physics_process(delta: float) -> void:
@@ -100,10 +113,16 @@ func _physics_process(delta: float) -> void:
 	# handle powers
 	match active_power:
 		PowerType.WATER:
-			print("WATER POWER ACTIVE")
 			# leaving a trail of water will set that tile as wet
 			if grid_map != null and tile_pos is Vector3i:
 				tiles_data[tile_pos_str] = "wet"
+				print(tile_pos)
+				print(last_tile_pos)
+				if tile_pos != last_tile_pos:
+					create_puddle(tile_pos)
+					last_tile_pos = tile_pos
+					
+			
 	
 	if dead == false and grid_map != null and tile_pos_str in tiles_data and tiles_data[tile_pos_str] == "wet":
 		speed = 10.0

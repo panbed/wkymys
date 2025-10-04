@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://35lf2kesbgdv"]
+
+[ext_resource type="Script" uid="uid://wx1u6kby5mx" path="res://scripts/wires.gd" id="1_gtcct"]
+[ext_resource type="Texture2D" uid="uid://wl7ruuoaydxo" path="res://images/wires.png" id="2_h0i5q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kcbiy"]
+size = Vector3(2, 2, 2)
+
+[node name="Wires" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+script = ExtResource("1_gtcct")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_kcbiy")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.02
+billboard = 1
+texture_filter = 4
+texture = ExtResource("2_h0i5q")
