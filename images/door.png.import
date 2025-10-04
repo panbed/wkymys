@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bv8fju4tqp14c"
-path.s3tc="res://.godot/imported/player_ghost_def.png-1fb79b56e6b7e95411dc1b59d93b2388.s3tc.ctex"
+uid="uid://bqfcjae3t5khv"
+path.s3tc="res://.godot/imported/door.png-e72a9147df1a5acfd78616a19e1745ae.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://images/player_ghost_def.png"
-dest_files=["res://.godot/imported/player_ghost_def.png-1fb79b56e6b7e95411dc1b59d93b2388.s3tc.ctex"]
+source_file="res://images/door.png"
+dest_files=["res://.godot/imported/door.png-e72a9147df1a5acfd78616a19e1745ae.s3tc.ctex"]
 
 [params]
 

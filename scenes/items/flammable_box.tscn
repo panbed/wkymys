@@ -52,7 +52,7 @@ emission_box_extents = Vector3(1, 1, 1)
 gravity = Vector3(0, 9.8, 0)
 turbulence_enabled = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ft5oi"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bv0rj"]
 albedo_color = Color(1, 0.27058825, 0.047058824, 1)
 emission_enabled = true
 emission = Color(1.7602391, 0.25555247, 0, 1)
@@ -60,7 +60,7 @@ grow = true
 grow_amount = 0.771
 
 [sub_resource type="BoxMesh" id="BoxMesh_bv0rj"]
-material = SubResource("StandardMaterial3D_ft5oi")
+material = SubResource("StandardMaterial3D_bv0rj")
 size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_orhx0"]

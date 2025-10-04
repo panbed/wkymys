@@ -6,7 +6,7 @@ extends Node3D
 # 	keypad.keypad_broken.connect(Callable(self, "keypad_broken"))
 
 # func keypad_broken() -> void:
-# 	print("deleting")
+# 	print("deleting")e
 # 	doors.queue_free()
 
 func _ready() -> void:

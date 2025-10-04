@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cy7ymxolct71y"]
+
+[ext_resource type="Texture2D" uid="uid://bqfcjae3t5khv" path="res://images/door.png" id="1_hpvv5"]
+[ext_resource type="Script" uid="uid://egrhs2ytnx8o" path="res://scripts/Door.gd" id="2_uvdjg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hpvv5"]
+
+[node name="DoorToNextLevel" type="Area3D"]
+script = ExtResource("2_uvdjg")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture = ExtResource("1_hpvv5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(3.5494604, 0, 0, 0, 5.1111097, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_hpvv5")

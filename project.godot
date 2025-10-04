@@ -79,6 +79,8 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 [global_group]
 
 dangerous="Objects/areas that will kill the player."
+player="The player."
+particle="Particle."
 
 [input]
 

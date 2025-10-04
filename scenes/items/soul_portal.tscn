@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0nekt6asltut"]
+
+[ext_resource type="Script" uid="uid://dyy8bgamrgw7e" path="res://scripts/soul_portal.gd" id="1_hwqtj"]
+
+[sub_resource type="Gradient" id="Gradient_7hx7a"]
+offsets = PackedFloat32Array(0.10702341, 0.30769232, 0.47826087, 0.6454849)
+colors = PackedColorArray(2.887845e-06, 0.23773548, 0.6568747, 1, 0.5833335, 0, 1, 0.9069767, 0.4223334, 0.22960001, 0.56, 1, 0.5833335, 0, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hwqtj"]
+gradient = SubResource("Gradient_7hx7a")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7hx7a"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hwqtj"]
+gravity = Vector3(0, 1, 0)
+radial_accel_min = -2.2351742e-06
+radial_accel_max = 2.5099976
+scale_max = 4.13
+hue_variation_min = -0.22000001
+hue_variation_max = 0.009999977
+
+[node name="SoulPortal" type="Area3D"]
+script = ExtResource("1_hwqtj")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, -8.742278e-08, 2, 0, -2, -8.742278e-08, 0, 0, 0)
+shaded = true
+texture_filter = 0
+texture = SubResource("GradientTexture2D_hwqtj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1800046, 0)
+shape = SubResource("BoxShape3D_7hx7a")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_hwqtj")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.11488509, 0.99337876, 0, -0.99337876, 0.11488509, 0, 2.9225805, 0.001144886)

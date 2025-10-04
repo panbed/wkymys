@@ -10,6 +10,10 @@ var active_power: PowerType = PowerType.NONE
 @onready var power_label: Label3D = $PowerLabel
 @onready var raycast_3d: RayCast3D = $RayCast3D
 
+@onready var water_particles: GPUParticles3D = $WaterParticles
+@onready var fire_particles: GPUParticles3D = $FireParticles
+@onready var lightning_particles: GPUParticles3D = $LightningParticles
+
 
 var tile_names = {
 	"floor": 0,
@@ -31,6 +35,10 @@ var can_move: bool = true
 
 var last_safe_position: Vector3 = Vector3.ZERO
 var last_input_direction: Vector3 = Vector3.FORWARD
+
+var tile_pos: Vector3i = Vector3i(0, 0, 0)
+var tile_id: int = -1
+var tile_pos_str: String = ""
 	
 func vector3i_to_str(v: Vector3i) -> String:
 	return str(v.x) + "," + str(v.y) + "," + str(v.z)
@@ -62,17 +70,18 @@ func _physics_process(delta: float) -> void:
 			power_label.text = "????????"
 
 	# get the current tile underneath the player
-	var tile_pos = grid_map.local_to_map(global_transform.origin)
-	tile_pos.y -= 1
-	var tile_id = grid_map.get_cell_item(tile_pos)
-	
-	if tile_id == tile_names["water"]:
-		# death_timer.start()
-		die(PowerType.WATER)
-	else:
-		if death_timer.time_left == 0:
-			# print("setting safe pos")
-			last_safe_position = global_transform.origin
+	if grid_map != null:
+		tile_pos = grid_map.local_to_map(global_transform.origin)
+		tile_pos.y -= 1
+		tile_id = grid_map.get_cell_item(tile_pos)
+		
+		if tile_id == tile_names["water"]:
+			# death_timer.start()
+			die(PowerType.WATER)
+		else:
+			if death_timer.time_left == 0:
+				# print("setting safe pos")
+				last_safe_position = global_transform.origin
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -81,7 +90,8 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= 9.8 * delta
 		print("velocity.y is ", velocity.y)
 		
-	var tile_pos_str = vector3i_to_str(tile_pos)
+	if grid_map != null:
+		tile_pos_str = vector3i_to_str(tile_pos)
 
 	# DEBUG button:
 	if Input.is_action_just_pressed("debug"):
@@ -92,10 +102,10 @@ func _physics_process(delta: float) -> void:
 		PowerType.WATER:
 			print("WATER POWER ACTIVE")
 			# leaving a trail of water will set that tile as wet
-			if tile_pos is Vector3i:
-				tiles_data[tile_pos_str] = "wet"	
+			if grid_map != null and tile_pos is Vector3i:
+				tiles_data[tile_pos_str] = "wet"
 	
-	if dead == false and tile_pos_str in tiles_data and tiles_data[tile_pos_str] == "wet":
+	if dead == false and grid_map != null and tile_pos_str in tiles_data and tiles_data[tile_pos_str] == "wet":
 		speed = 10.0
 		friction = 1.0
 	else:
@@ -174,29 +184,39 @@ func die(death_type: PowerType) -> void:
 	
 	# when we're a ghost we can phase through walls, so disable the "wall" mask
 	self.set_collision_mask_value(2, false)
+	
+	active_power = death_type
+	
 	match death_type:
 		PowerType.WATER:
-			active_power = PowerType.WATER
+			print("water ,,")
+			water_particles.emitting = true
 		PowerType.ELECTRIC:
 			print("electric death")
-			active_power = PowerType.ELECTRIC
+			lightning_particles.emitting = true
 		PowerType.FIRE:
-			active_power = PowerType.FIRE
+			print("fir.")
+			fire_particles.emitting = true
 		PowerType.NONE:
-			active_power = PowerType.NONE
+			print("back 2 nromal")
 		_:
 			print("idk")
 
-			
+func stop_all_particles():
+	water_particles.emitting = false
+	fire_particles.emitting = false
+	lightning_particles.emitting = false
+
 func respawn():
 	sprite_3d.texture = preload("uid://gfgffufbojyc")
 	dead = false
 	active_power = PowerType.NONE
 	global_transform.origin = last_safe_position
 	
+	stop_all_particles()
+	
 	can_move = false
 	safe_after_death_timer.start()
-
 	
 func debug_text(text: String, time: float = 1):
 	debug_label.text = text
