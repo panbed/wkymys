@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=4 uid="uid://cyx5o6s2nkofr"]
+[gd_scene load_steps=16 format=4 uid="uid://cyx5o6s2nkofr"]
 
 [ext_resource type="Script" uid="uid://d0qs17dfvlngf" path="res://scenes/levels/tutorial/tutorial01.gd" id="1_ipkdw"]
 [ext_resource type="Shader" uid="uid://bitm1xhq6iwot" path="res://resources/pixel.gdshader" id="2_kr6ws"]
 [ext_resource type="PackedScene" uid="uid://dihhxrtwoq3o5" path="res://scenes/player.tscn" id="3_n68b8"]
 [ext_resource type="MeshLibrary" uid="uid://dlcn1pmm5chte" path="res://resources/blocks.tres" id="4_wlcag"]
 [ext_resource type="Texture2D" uid="uid://vnx00up0s45p" path="res://models/Block_Blank_Blocks_PixelArt.png" id="5_j15se"]
+[ext_resource type="PackedScene" uid="uid://b0nekt6asltut" path="res://scenes/items/soul_portal.tscn" id="6_ajkoq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e5uuo"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -206,5 +207,8 @@ shape = SubResource("ConcavePolygonShape3D_enkt8")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NextLevelPortal"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.256762, -3.2356362, 2.27525)
 shape = SubResource("BoxShape3D_65gyt")
+
+[node name="SoulPortal" parent="." instance=ExtResource("6_ajkoq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1322627, 0.010522962, 6.267128)
 
 [connection signal="body_entered" from="NextLevelPortal" to="." method="_on_next_level_portal_body_entered"]
