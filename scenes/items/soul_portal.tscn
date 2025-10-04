@@ -67,3 +67,5 @@ draw_pass_1 = SubResource("RibbonTrailMesh_kgaph")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.11488509, 0.99337876, 0, -0.99337876, 0.11488509, 0, 2.9225805, 0.001144886)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
