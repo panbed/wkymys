@@ -1,14 +1,121 @@
-[gd_scene load_steps=5 format=3 uid="uid://dihhxrtwoq3o5"]
+[gd_scene load_steps=23 format=3 uid="uid://dihhxrtwoq3o5"]
 
 [ext_resource type="Script" uid="uid://b63k55wvnl66g" path="res://scenes/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://gfgffufbojyc" path="res://images/player_mortal.png" id="2_g2els"]
+[ext_resource type="Texture2D" uid="uid://b3sv12nfs0hx3" path="res://images/particles/particle_water_droplet.png" id="3_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://c7fqv0bgfbo26" path="res://images/particles/particle_flame.png" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://dghp42okqt7df" path="res://images/particles/particle_ele.png" id="5_qlg0r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
 
 [sub_resource type="SystemFont" id="SystemFont_3vyb7"]
 subpixel_positioning = 0
 
-[node name="Player" type="CharacterBody3D"]
+[sub_resource type="Gradient" id="Gradient_qhqgy"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dqkch"]
+gradient = SubResource("Gradient_qhqgy")
+width = 64
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qhqgy"]
+emission_shape_offset = Vector3(0, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 1, 0.1)
+gravity = Vector3(0, -4, 0)
+scale_max = 3.0
+color_ramp = SubResource("GradientTexture1D_dqkch")
+hue_variation_min = -0.19000001
+hue_variation_max = 0.059999976
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qhqgy"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_qhqgy")
+emission = Color(0.11934223, 0.38088357, 0.55249447, 1)
+billboard_mode = 1
+billboard_keep_scale = true
+grow_amount = -3.084
+
+[sub_resource type="QuadMesh" id="QuadMesh_dqkch"]
+material = SubResource("StandardMaterial3D_qhqgy")
+size = Vector2(0.2, 0.3)
+
+[sub_resource type="Gradient" id="Gradient_qlg0r"]
+offsets = PackedFloat32Array(0, 0.990566)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tuyoq"]
+gradient = SubResource("Gradient_qlg0r")
+width = 128
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fjrip"]
+emission_shape_offset = Vector3(0, 1.5, 1)
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0.5, 0.1)
+gravity = Vector3(0, 4, 0)
+radial_accel_min = -16.470001
+radial_accel_max = 8.239998
+scale_min = 0.25
+scale_max = 1.5
+color_ramp = SubResource("GradientTexture1D_tuyoq")
+turbulence_enabled = true
+turbulence_noise_speed_random = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_smehm"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("4_dqkch")
+emission = Color(0.11934223, 0.38088357, 0.55249447, 1)
+billboard_mode = 1
+billboard_keep_scale = true
+grow_amount = -3.084
+
+[sub_resource type="QuadMesh" id="QuadMesh_ur7pv"]
+material = SubResource("StandardMaterial3D_smehm")
+size = Vector2(0.6, 0.9)
+
+[sub_resource type="Gradient" id="Gradient_dqkch"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.28627452, 0.4509804, 0.627451, 0.81960785)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0.47191006, 1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qlg0r"]
+gradient = SubResource("Gradient_dqkch")
+width = 128
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tuyoq"]
+emission_shape_scale = Vector3(0.5, 1, 2)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 5, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -16.470001
+radial_accel_max = 8.239998
+damping_max = 71.787
+scale_min = 0.25
+scale_max = 1.5
+color_ramp = SubResource("GradientTexture1D_qlg0r")
+turbulence_enabled = true
+turbulence_noise_speed_random = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tuyoq"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("5_qlg0r")
+emission = Color(0.11934223, 0.38088357, 0.55249447, 1)
+billboard_mode = 1
+billboard_keep_scale = true
+grow_amount = -3.084
+
+[sub_resource type="QuadMesh" id="QuadMesh_y4r1p"]
+material = SubResource("StandardMaterial3D_tuyoq")
+size = Vector2(0.6, 0.9)
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 top_level = true
 collision_mask = 3
@@ -44,6 +151,25 @@ font_size = 64
 target_position = Vector3(2, -1, 0)
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="WaterParticles" type="GPUParticles3D" parent="." groups=["particle"]]
+emitting = false
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_qhqgy")
+draw_pass_1 = SubResource("QuadMesh_dqkch")
+
+[node name="FireParticles" type="GPUParticles3D" parent="." groups=["particle"]]
+emitting = false
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_fjrip")
+draw_pass_1 = SubResource("QuadMesh_ur7pv")
+
+[node name="LightningParticles" type="GPUParticles3D" parent="." groups=["particle"]]
+emitting = false
+amount = 4
+lifetime = 0.35000000000000003
+process_material = SubResource("ParticleProcessMaterial_tuyoq")
+draw_pass_1 = SubResource("QuadMesh_y4r1p")
 
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="SafeAfterDeathTimer" to="." method="_on_safe_after_death_timer_timeout"]

@@ -1,0 +1,141 @@
+[gd_scene load_steps=14 format=3 uid="uid://cowhs7xyg3cf4"]
+
+[ext_resource type="Script" uid="uid://o3us10x25aus" path="res://scenes/levels/level3/level_3.gd" id="1_orhx0"]
+[ext_resource type="Shader" uid="uid://bitm1xhq6iwot" path="res://resources/pixel.gdshader" id="2_hjakd"]
+[ext_resource type="PackedScene" uid="uid://dihhxrtwoq3o5" path="res://scenes/player.tscn" id="3_5fsi0"]
+[ext_resource type="MeshLibrary" uid="uid://dlcn1pmm5chte" path="res://resources/blocks.tres" id="4_nfwes"]
+[ext_resource type="PackedScene" uid="uid://cy7ymxolct71y" path="res://scenes/door.tscn" id="5_hjakd"]
+[ext_resource type="PackedScene" uid="uid://bi6m4huv17qs" path="res://scenes/items/stove.tscn" id="5_mguho"]
+[ext_resource type="PackedScene" uid="uid://cmpllywqffbt1" path="res://scenes/items/flammable_box.tscn" id="6_ohtdt"]
+[ext_resource type="PackedScene" uid="uid://dw1q8kn7fqu4f" path="res://scenes/items/sink.tscn" id="7_orhx0"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e5uuo"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0, 0, 0, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Sky" id="Sky_nnsk1"]
+sky_material = SubResource("ProceduralSkyMaterial_e5uuo")
+
+[sub_resource type="Environment" id="Environment_rwgxs"]
+background_mode = 2
+sky = SubResource("Sky_nnsk1")
+tonemap_mode = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0juu"]
+shader = ExtResource("2_hjakd")
+shader_parameter/Pixel_Size = 8.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_65gyt"]
+size = Vector3(10.405, 1, 10.495)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_orhx0")
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_rwgxs")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 11.34266, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 0.75674415, 0.65371126, 0, -0.65371126, 0.75674415, 0, 15.746824, 24.954409)
+projection = 1
+size = 22.598
+
+[node name="PixelFilter" type="CanvasModulate" parent="Environment"]
+material = SubResource("ShaderMaterial_k0juu")
+
+[node name="Player" parent="." node_paths=PackedStringArray("grid_map") instance=ExtResource("3_5fsi0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.329891, 1.4890038, 7)
+grid_map = NodePath("../Map/FloorGrid")
+
+[node name="Map" type="Node" parent="."]
+
+[node name="WallGrid" type="GridMap" parent="Map"]
+mesh_library = ExtResource("4_nfwes")
+collision_layer = 2
+
+[node name="WallNoGhostGrid" type="GridMap" parent="Map"]
+mesh_library = ExtResource("4_nfwes")
+data = {
+"cells": PackedInt32Array(7, 65535, 1048580, 6, 65535, 196612, 5, 65535, 196612, 4, 65535, 196612, 3, 65535, 196612, 2, 65535, 196612, 1, 65535, 196612, 0, 65535, 196612, 65535, 65535, 196612, 65534, 65535, 196612, 65533, 65535, 196612, 65532, 65535, 196612, 65531, 65535, 196612, 65530, 65535, 196612, 65529, 65535, 4, 65528, 65535, 4, 65528, 0, 4, 65528, 1, 4, 65528, 2, 4, 65528, 3, 4, 65528, 4, 4, 65528, 5, 4, 65528, 6, 4, 65528, 7, 4, 7, 0, 4, 7, 1, 4, 7, 2, 4, 7, 3, 4, 7, 4, 4, 7, 5, 4, 7, 6, 4, 7, 7, 4, 65528, 9, 4, 65529, 9, 4, 65528, 8, 4, 65530, 9, 4, 65531, 9, 4, 65532, 9, 4, 65533, 9, 4, 65534, 9, 4, 65535, 9, 4, 0, 9, 4, 1, 9, 4, 2, 9, 4, 3, 9, 4, 4, 9, 4, 5, 9, 4, 6, 9, 4, 7, 9, 4, 7, 8, 196612)
+}
+
+[node name="FloorGrid" type="GridMap" parent="Map"]
+mesh_library = ExtResource("4_nfwes")
+data = {
+"cells": PackedInt32Array(-65529, 7, 1376256, -8, 7, 1376256, -7, 65535, 1376256, -6, 1, 1376256, -6, 2, 1376256, -6, 3, 1376256, -6, 4, 1376256, -6, 5, 1376256, -6, 6, 1376256, -7, 6, 1376256, -7, 7, 1376256, -6, 7, 1376256, -5, 7, 1376256, -4, 7, 1376256, -3, 7, 1376256, -2, 7, 1376256, -1, 7, 1376256, -65536, 7, 1376256, -65535, 7, 1376256, -65534, 7, 1376256, -65533, 7, 1376256, -65532, 7, 1376256, -65529, 65535, 1376256, -65529, 0, 1376256, -65529, 1, 1376256, -8, 65535, 1376256, -8, 0, 1376256, -8, 1, 1376256, -8, 2, 1376256, -8, 3, 1376256, -8, 4, 1376256, -8, 5, 1376256, -8, 6, 1376256, -7, 1, 1376256, -7, 2, 1376256, -7, 3, 1376256, -7, 4, 1376256, -7, 5, 1376256, -6, 65535, 1376256, -6, 0, 1376256, -5, 65535, 1376256, -5, 0, 1376256, -5, 1, 1376256, -5, 2, 1376256, -4, 65535, 1376256, -4, 0, 1376256, -4, 1, 1376256, -4, 2, 1376256, -3, 65535, 1376256, -3, 0, 1376256, -3, 1, 1376256, -3, 2, 1376256, -2, 65535, 1376256, -2, 0, 1376256, -2, 1, 1376256, -2, 2, 1376256, -2, 3, 1376256, -2, 4, 1376256, -2, 5, 1376256, -2, 6, 1376256, -1, 65535, 1376256, -1, 0, 1376256, -1, 1, 1376256, -1, 2, 1376256, -1, 3, 1376256, -1, 4, 1376256, -1, 5, 1376256, -1, 6, 1376256, -65536, 65535, 1376256, -65536, 0, 1376256, -65536, 1, 1376256, -65536, 2, 0, -65536, 3, 1376256, -65536, 4, 1376256, -65536, 5, 1376256, -65536, 6, 1376256, -65535, 65535, 1376256, -65535, 0, 1376256, -65535, 1, 1376256, -65535, 2, 1376256, -65535, 3, 1376256, -65535, 4, 1376256, -65535, 5, 1376256, -65535, 6, 1376256, -65534, 65535, 1376256, -65534, 0, 1376256, -65534, 1, 1376256, -65534, 2, 1376256, -65534, 3, 1376256, -65534, 4, 1376256, -65534, 5, 1376256, -65534, 6, 1376256, -65533, 65535, 1376256, -65533, 3, 1376256, -65533, 4, 1376256, -65533, 5, 1376256, -65533, 6, 1376256, -65532, 65535, 1376256, -65532, 3, 1376256, -65532, 4, 1376256, -65532, 5, 1376256, -65532, 6, 1376256, -65531, 65535, 0, -65531, 3, 1376256, -65531, 4, 1376256, -65531, 5, 1376256, -65531, 6, 1376256, -65530, 65535, 1376256, -65530, 0, 1376256, -65530, 1, 1376256, -65530, 2, 0, -65530, 3, 1376256, -65530, 4, 1376256, -65530, 5, 1376256, -65530, 6, 1376256, -65529, 2, 1376256, -65529, 3, 1376256, -65529, 4, 1376256, -65529, 5, 1376256, -65529, 6, 1376256, -5, 3, 0, -5, 4, 0, -5, 5, 0, -5, 6, 0, -4, 6, 0, -4, 5, 0, -4, 4, 0, -4, 3, 0, -3, 3, 0, -3, 4, 0, -3, 5, 0, -3, 6, 0, -65533, 0, 0, -65533, 1, 0, -65533, 2, 0, -65532, 2, 0, -65532, 1, 0, -65531, 1, 0, -65531, 0, 0, -65532, 0, 0, -65531, 2, 0, -65530, 7, 1376256, -65531, 7, 1376256, -8, 8, 1376256, -7, 8, 1376256, -6, 8, 1376256, -5, 8, 1376256, -4, 8, 1376256, -3, 8, 1376256, -2, 8, 1376256, -1, 8, 1376256, -65536, 8, 1376256, -65535, 8, 1376256, -65534, 8, 1376256, -65533, 8, 1376256, -65532, 8, 1376256, -65531, 8, 1376256, -65530, 8, 1376256, -65529, 8, 1376256, -7, 0, 1376256)
+}
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="DoorToNextLevel" parent="Map" instance=ExtResource("5_hjakd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.534631, 1.648411, 0.47551632)
+goto_scene = "res://scenes/world.tscn"
+
+[node name="Interactables" type="Node" parent="."]
+
+[node name="Stove" parent="Interactables" instance=ExtResource("5_mguho")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, -10.358472, 0, -2.4140687)
+
+[node name="Boxes" type="Node" parent="Interactables"]
+
+[node name="FlammableBox17" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.105979, 1.0386238, 1.7774801)
+
+[node name="FlammableBox18" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.105979, 1.0386238, 9.543843)
+
+[node name="FlammableBox19" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.174819, 1.0386238, 1.7774801)
+
+[node name="FlammableBox20" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.835822, 1.0386238, 9.537194)
+
+[node name="FlammableBox21" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7850088, 1.0386238, 3.8762374)
+
+[node name="FlammableBox23" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0517026, 1.0386238, 1.7774801)
+
+[node name="FlammableBox24" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.046338916, 1.0386238, 10.955953)
+
+[node name="FlammableBox26" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.105979, 1.0386238, 15.255381)
+
+[node name="FlammableBox29" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5996461, 1.0386238, 13.83258)
+
+[node name="FlammableBox30" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4.277494, 2.0384998, 4.9153776)
+
+[node name="FlammableBox33" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0.58392334, 2.0384998, 6.6221533)
+
+[node name="FlammableBox31" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 2.1520667, 1.0386238, 12.180743)
+
+[node name="FlammableBox34" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 4.787281, 1.0386238, 13.341315)
+
+[node name="FlammableBox32" parent="Interactables/Boxes" instance=ExtResource("6_ohtdt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2563666, 1.0386238, 16.809679)
+
+[node name="Sink" parent="Interactables" instance=ExtResource("7_orhx0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, -13.66312, 0, -2.5399146)
+
+[node name="Doors" type="Node" parent="."]
+
+[node name="NextLevelPortal" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NextLevelPortal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1995125, -3.2356362, 2.27525)
+shape = SubResource("BoxShape3D_65gyt")
+
+[connection signal="body_entered" from="NextLevelPortal" to="." method="_on_next_level_portal_body_entered"]
