@@ -125,7 +125,11 @@ func _physics_process(delta: float) -> void:
 			print(collider)
 			if collider is Interactable:
 				(collider as Interactable).interact(self)
-
+				
+	# reset level
+	if Input.is_action_just_pressed("reset"):
+		get_tree().reload_current_scene()
+		
 	# get the input direction and handle the movement/deceleration,
 	# as well as change the raycast direction to match the last input direction
 	var input_dir := Input.get_vector("left", "right", "up", "down")
