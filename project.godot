@@ -26,7 +26,8 @@ directories/dch_directory={
 "test": "res://dialogs/characters/test.dch"
 }
 directories/dtl_directory={
-"tutorial": "res://dialogs/timelines/tutorial.dtl"
+"tutorial": "res://dialogs/timelines/tutorial.dtl",
+"waterFreeze": "res://dialogs/timelines/waterFreeze.dtl"
 }
 layout/style_directory={}
 extensions_folder="res://addons/dialogic_additions"
@@ -62,6 +63,10 @@ audio/channel_defaults={
 "volume": 0.0
 }
 }
+glossary/default_case_sensitive=true
+layout/style_list=[]
+layout/default_style="Default"
+variables={}
 
 [display]
 
