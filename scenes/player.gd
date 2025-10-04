@@ -1,8 +1,5 @@
 extends CharacterBody3D
 
-const PowerType = preload("uid://c7iq8laid2oq5").PowerType
-var active_power: PowerType = PowerType.NONE
-@export var grid_map: GridMap
 @onready var death_timer: Timer = $DeathTimer
 @onready var safe_after_death_timer: Timer = $SafeAfterDeathTimer
 @onready var debug_label: Label3D = $DebugLabel
@@ -16,7 +13,21 @@ var active_power: PowerType = PowerType.NONE
 
 
 var puddle_scene := preload("res://scenes/puddle.tscn")
+@export var grid_map: GridMap
+@export var lock_last_safe_pos: bool = false
+@export var regular_speed := 5.0
+@export var wet_speed := 20.0
+@export var accel_ground := 25.0
+@export var decel_ground := 10.0
+@export var slip_gain := 2.5
+@export var slip_hold_time :=0.5
+@export var slip_decay := 3.0
 
+const PowerType = preload("uid://c7iq8laid2oq5").PowerType
+var active_power: PowerType = PowerType.NONE
+var slip_amount := 0.0
+var slip_hold := 0.0
+var gravity = 9.8
 var tile_names = {
 	"floor": 0,
 	"stone": 7,
@@ -27,11 +38,6 @@ var dangerous_tiles: Array[String] = ["water"]
 
 # tiles that are wet, which will make the player run faster (or "slip")
 var tiles_data: = {}
-
-@export var speed = 5.0
-@export var acceleration = 10.0
-@export var friction = 15.0
-
 var dead: bool = false
 var can_move: bool = true
 
@@ -42,31 +48,31 @@ var last_tile_pos: Vector3i = Vector3i(0, 0, 0)
 var tile_pos: Vector3i = Vector3i(0, 0, 0)
 var tile_id: int = -1
 var tile_pos_str: String = ""
-	
+
 func vector3i_to_str(v: Vector3i) -> String:
 	return str(v.x) + "," + str(v.y) + "," + str(v.z)
-	
+
 func str_to_vector3i(s: String) -> Vector3i:
 	var parts = s.split(",")
 	if parts.size() != 3:
 		print("Invalid Vector3i string!")
 		return Vector3.ZERO
-	
+
 	var x = int(parts[0])
 	var y = int(parts[1])
 	var z = int(parts[2])
 	return Vector3i(x, y, z)
-	
+
 func create_puddle(tile_pos: Vector3i):
 	var puddle = puddle_scene.instantiate()
 	var world_pos = grid_map.map_to_local(tile_pos)
 	var tile_pos_id = grid_map.get_cell_item(world_pos)
-	
+
 	print(tile_pos_id)
-	if tile_names["water"] != tile_pos_id:
-		puddle.global_transform.origin = world_pos + Vector3(0, 2, 0)
-		get_parent().add_child(puddle)
-	
+	#if tile_names["water"] != tile_pos_id:
+	puddle.global_transform.origin = world_pos + Vector3(0, 2, 0)
+	get_parent().add_child(puddle)
+
 
 func _physics_process(delta: float) -> void:
 	# DEBUG: change text of power label
@@ -87,29 +93,56 @@ func _physics_process(delta: float) -> void:
 		tile_pos = grid_map.local_to_map(global_transform.origin)
 		tile_pos.y -= 1
 		tile_id = grid_map.get_cell_item(tile_pos)
-		
+
+	var on_wet = (dead == false) and tiles_data.has(tile_pos_str) and tiles_data[tile_pos_str] == "wet"
+	var input_dir := Input.get_vector("left", "right", "up", "down")
+	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var has_input := direction.length_squared() > 0.0001
+	if on_wet and has_input:
+		slip_amount = min(1.0, slip_amount + slip_gain * get_physics_process_delta_time())
+		slip_hold = slip_hold_time
+	else:
+		if slip_hold > 0.0:
+			slip_hold -= get_physics_process_delta_time()
+		else:
+			slip_amount = max(0.0, slip_amount - slip_decay * get_physics_process_delta_time())
+
+	var target_speed = lerp(regular_speed, wet_speed, slip_amount)
+
+	var hv := Vector2(velocity.x, velocity.z)
+	var desired
+	var rate
+	if has_input:
+		desired = Vector2(direction.x, direction.z) * target_speed
+		rate = accel_ground
+		last_input_direction = direction
+	else:
+		desired = Vector2.ZERO
+		rate = decel_ground
+	hv = hv.move_toward(desired, rate * get_physics_process_delta_time())
+	velocity.x = hv.x
+	velocity.z = hv.y
+
+
+	if not lock_last_safe_pos:
 		if tile_id == tile_names["water"]:
-			# death_timer.start()
 			die(PowerType.WATER)
 		else:
 			if death_timer.time_left == 0:
-				# print("setting safe pos")
 				last_safe_position = global_transform.origin
-	
+
+
 	# Add the gravity.
 	if not is_on_floor():
-		print("not on floor")
-		print("delta is ", delta)
-		velocity.y -= 9.8 * delta
-		print("velocity.y is ", velocity.y)
-		
+		velocity.y -= gravity * delta
+
 	if grid_map != null:
 		tile_pos_str = vector3i_to_str(tile_pos)
 
 	# DEBUG button:
 	if Input.is_action_just_pressed("debug"):
 		die(PowerType.FIRE)
-		
+
 	# handle powers
 	match active_power:
 		PowerType.WATER:
@@ -121,15 +154,6 @@ func _physics_process(delta: float) -> void:
 				if tile_pos != last_tile_pos:
 					create_puddle(tile_pos)
 					last_tile_pos = tile_pos
-					
-			
-	
-	if dead == false and grid_map != null and tile_pos_str in tiles_data and tiles_data[tile_pos_str] == "wet":
-		speed = 10.0
-		friction = 1.0
-	else:
-		speed = 5.0
-		friction = 15.0
 
 	# if the user presses the "death" button, die
 	if Input.is_action_just_pressed("ghost"):
@@ -145,43 +169,9 @@ func _physics_process(delta: float) -> void:
 			if collider is Interactable:
 				(collider as Interactable).interact(self)
 				
-	# reset level
+		# reset level
 	if Input.is_action_just_pressed("reset"):
 		get_tree().reload_current_scene()
-		
-	# get the input direction and handle the movement/deceleration,
-	# as well as change the raycast direction to match the last input direction
-	var input_dir := Input.get_vector("left", "right", "up", "down")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	var bedVelocity
-	if not dead:
-		if direction.length_squared() > 0.001:
-			last_input_direction = direction
-			#IF YOU COMMENT OUT THESE 2 LIENS BELOW, GRAVITY WILL ONLY WORK WHEN TAPPING MOVEMENT
-			velocity.x = direction.x * speed
-			velocity.z = direction.z * speed
-			#velocity = velocity.move_toward(direction * speed, speed)
-		else:
-			#IF YOU COMMENT OUT THESE 2 LIENS BELOW, GRAVITY WILL ONLY WORK WHEN TAPPING MOVEMENT
-			velocity.x = move_toward(velocity.x, 0, speed)
-			velocity.z = move_toward(velocity.z, 0, speed)
-			#velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
-	else:
-		if direction.length_squared() > 0.001:
-			last_input_direction = direction
-			#IF YOU COMMENT OUT THESE 2 LIENS BELOW, GRAVITY WILL ONLY WORK WHEN TAPPING MOVEMENT
-			#velocity.x = direction.x * speed
-			#velocity.z = direction.z * speed
-			bedVelocity = velocity.move_toward(direction * speed, speed)
-		else:
-			#IF YOU COMMENT OUT THESE 2 LIENS BELOW, GRAVITY WILL ONLY WORK WHEN TAPPING MOVEMENT
-			#velocity.x = move_toward(velocity.x, 0, speed)
-			#velocity.z = move_toward(velocity.z, 0, speed)
-			bedVelocity = velocity.move_toward(Vector3.ZERO, friction * delta)
-	#PRESERVE GRAVITY(velocity.y) WITH THE BED VAR
-	if bedVelocity:
-		velocity.x = bedVelocity.x
-		velocity.z = bedVelocity.z
 	raycast_3d.target_position = last_input_direction.normalized() * 4.0
 
 	if can_move == true:
@@ -192,24 +182,25 @@ func _on_death_timer_timeout() -> void:
 	self.set_collision_mask_value(2, true)
 	debug_text("alive again", 0.5)
 	respawn()
-	
+
 func die(death_type: PowerType) -> void:
 	if dead == true:
 		return
 
 	death_timer.start()
-		
+
 	# set sprite to ghost
 	sprite_3d.texture = preload("uid://bv8fju4tqp14c")
-		
+
 	dead = true
 	debug_text("died")
-	
+	print(death_type)
+
 	# when we're a ghost we can phase through walls, so disable the "wall" mask
 	self.set_collision_mask_value(2, false)
-	
+
 	active_power = death_type
-	
+
 	match death_type:
 		PowerType.WATER:
 			print("water ,,")
@@ -235,12 +226,12 @@ func respawn():
 	dead = false
 	active_power = PowerType.NONE
 	global_transform.origin = last_safe_position
-	
+
 	stop_all_particles()
-	
+
 	can_move = false
 	safe_after_death_timer.start()
-	
+
 func debug_text(text: String, time: float = 1):
 	debug_label.text = text
 	await get_tree().create_timer(time).timeout

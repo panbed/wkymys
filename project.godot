@@ -26,7 +26,8 @@ directories/dch_directory={
 "test": "res://dialogs/characters/test.dch"
 }
 directories/dtl_directory={
-"tutorial": "res://dialogs/timelines/tutorial.dtl"
+"tutorial": "res://dialogs/timelines/tutorial.dtl",
+"waterFreeze": "res://dialogs/timelines/waterFreeze.dtl"
 }
 layout/style_directory={
 "": "res://dialogs/themes/normal.tres",
