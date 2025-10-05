@@ -4,7 +4,7 @@ class_name Player
 @onready var death_timer: Timer = $DeathTimer
 @onready var safe_after_death_timer: Timer = $SafeAfterDeathTimer
 @onready var debug_label: Label3D = $DebugLabel
-@onready var sprite_3d: Sprite3D = $Sprite3D
+@onready var sprite_3d: AnimatedSprite3D = $AnimatedSprite3D
 @onready var power_label: Label3D = $PowerLabel
 @onready var raycast_3d: RayCast3D = $RayCast3D
 
@@ -38,19 +38,8 @@ var tile_names = {
 	"stone": 7,
 	"water": 9,
 }
-
 var dangerous_tiles: Array[String] = ["water"]
-
-# tiles that are wet, which will make the player run faster (or "slip")
 var tiles_data: = {}
-
-
-#@export var speedConst = 5.0
-#@export var speed = speedConst
-#@export var acceleration = 10.0
-#@export var friction = 15.0
-
-
 var dead: bool = false
 var can_move: bool = true
 
@@ -61,6 +50,8 @@ var last_tile_pos: Vector3i = Vector3i(0, 0, 0)
 var tile_pos: Vector3i = Vector3i(0, 0, 0)
 var tile_id: int = -1
 var tile_pos_str: String = ""
+
+var current_anim: String = ""
 
 func vector3i_to_str(v: Vector3i) -> String:
 	return str(v.x) + "," + str(v.y) + "," + str(v.z)
@@ -129,9 +120,12 @@ func _physics_process(delta: float) -> void:
 		desired = Vector2(direction.x, direction.z) * target_speed
 		rate = accel_ground
 		last_input_direction = direction
+		_update_flip_from_direction()
+		
 	else:
 		desired = Vector2.ZERO
 		rate = decel_ground
+	_update_animation(has_input, Vector3(velocity.x, 0.0, velocity.z))
 	hv = hv.move_toward(desired, rate * get_physics_process_delta_time())
 	velocity.x = hv.x
 	velocity.z = hv.y
@@ -198,18 +192,13 @@ func _on_death_timer_timeout() -> void:
 func die(death_type: PowerType) -> void:
 	if dead == true:
 		return
-
+		
 	death_timer.start()
-
-	# set sprite to ghost
-	sprite_3d.texture = preload("uid://bv8fju4tqp14c")
-
 	dead = true
-	# debug_text("died")
-	
+	current_anim = "float"
+	sprite_3d.play("float")
 	# when we're a ghost we can phase through walls, so disable the "wall" mask
 	self.set_collision_mask_value(2, false)
-
 	active_power = death_type
 
 	match death_type:
@@ -235,7 +224,8 @@ func stop_all_particles():
 	lightning_particles.emitting = false
 
 func respawn():
-	sprite_3d.texture = preload("uid://gfgffufbojyc")
+	current_anim = "idle"
+	sprite_3d.play("idle")
 	dead = false
 	active_power = PowerType.NONE
 	global_transform.origin = last_safe_position
@@ -257,3 +247,33 @@ func debug_text(text: String, time: float = 1):
 func _on_safe_after_death_timer_timeout() -> void:
 	can_move = true
 	# debug_text("can move again", 1)
+	
+func _pick_dir4(dir: Vector3) -> String:
+	var v := Vector2(dir.x, dir.z)
+	if v.length() < 0.001:
+		return "idle"
+
+	if abs(v.x) > abs(v.y):
+		return "right" if v.x > 0.0 else "left"
+	else:
+		return "up" if v.y > 0.0 else "down"
+
+func _update_animation(has_input: bool, move_vec: Vector3) -> void:
+	if dead:
+		if current_anim != "float":
+			current_anim = "float"
+			sprite_3d.play("float")
+		return
+
+	var anim := "walk" if has_input and move_vec.length() > 0.01 else "idle"
+	if anim != current_anim:
+		current_anim = anim
+		sprite_3d.play(current_anim)
+
+func _update_flip_from_direction():
+	if dead:
+		return
+	# use last facing; only change when there's meaningful X
+	var x := last_input_direction.x
+	if abs(x) > 0.001:
+		sprite_3d.flip_h = x < 0.0  # face left => flip_h = true

@@ -1,7 +1,7 @@
 extends Node3D
 @onready var timer: Timer = $Map/water/Timer
 @onready var player: CharacterBody3D = $Player
-@onready var sprite_3d: Sprite3D = $Player/Sprite3D
+@onready var sprite_3d: AnimatedSprite3D = $Player/AnimatedSprite3D
 
 @onready var water: MeshInstance3D = $Map/water
 @onready var cylinder: MeshInstance3D = $Map/bullseye/Cylinder
