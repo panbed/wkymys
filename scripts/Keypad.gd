@@ -1,6 +1,6 @@
 extends Interactable
 
-const PowerType = preload("uid://c7iq8laid2oq5").PowerType
+const PowerType = PowerTypes.PowerType
 
 var broken = false
 signal keypad_broken()

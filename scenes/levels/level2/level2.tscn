@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://blqfvm2uum6iu"]
+[gd_scene load_steps=18 format=4 uid="uid://blqfvm2uum6iu"]
 
 [ext_resource type="Script" uid="uid://cf427xl4lexmy" path="res://scenes/levels/level2/level_2.gd" id="1_4hv4d"]
 [ext_resource type="Shader" uid="uid://bitm1xhq6iwot" path="res://resources/pixel.gdshader" id="2_7cafs"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ddkw0bd0wyxbm" path="res://scenes/items/power_socket.tscn" id="5_anotx"]
 [ext_resource type="PackedScene" uid="uid://cuslu0eckdr6n" path="res://scenes/items/keypad.tscn" id="6_73iqy"]
 [ext_resource type="Texture2D" uid="uid://vnx00up0s45p" path="res://models/Block_Blank_Blocks_PixelArt.png" id="7_ujj24"]
+[ext_resource type="PackedScene" uid="uid://5uhssuorv0gu" path="res://scenes/items/door_thing.tscn" id="8_8t4y1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e5uuo"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -144,18 +145,8 @@ collision_layer = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/Block_Blank2/Block_Blank/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_1nwpw")
 
-[node name="Block_Blank3" type="Node3D" parent="Doors"]
+[node name="Block_Blank3" parent="Doors" instance=ExtResource("8_8t4y1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0171374, 1.0386238, 15.099184)
-
-[node name="Block_Blank" type="MeshInstance3D" parent="Doors/Block_Blank3"]
-mesh = SubResource("ArrayMesh_i786v")
-skeleton = NodePath("")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Doors/Block_Blank3/Block_Blank"]
-collision_layer = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/Block_Blank3/Block_Blank/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_1nwpw")
 
 [node name="NextLevelPortal" type="Area3D" parent="."]
 
