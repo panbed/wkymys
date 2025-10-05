@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 const PowerType = preload("uid://c7iq8laid2oq5").PowerType
 var active_power: PowerType = PowerType.NONE
@@ -15,6 +16,9 @@ var active_power: PowerType = PowerType.NONE
 @onready var lightning_particles: GPUParticles3D = $LightningParticles
 
 
+# for tutorial dialogue
+var firstTimeDead = false;
+
 var tile_names = {
 	"floor": 0,
 	"stone": 7,
@@ -26,7 +30,8 @@ var dangerous_tiles: Array[String] = ["water"]
 # tiles that are wet, which will make the player run faster (or "slip")
 var tiles_data: = {}
 
-@export var speed = 5.0
+@export var speedConst = 5.0
+@export var speed = speedConst
 @export var acceleration = 10.0
 @export var friction = 15.0
 
@@ -46,7 +51,7 @@ func vector3i_to_str(v: Vector3i) -> String:
 func str_to_vector3i(s: String) -> Vector3i:
 	var parts = s.split(",")
 	if parts.size() != 3:
-		print("Invalid Vector3i string!")
+		# print("Invalid Vector3i string!")
 		return Vector3.ZERO
 	
 	var x = int(parts[0])
@@ -85,10 +90,10 @@ func _physics_process(delta: float) -> void:
 	
 	# Add the gravity.
 	if not is_on_floor():
-		print("not on floor")
-		print("delta is ", delta)
+		# print("not on floor")
+		# print("delta is ", delta)
 		velocity.y -= 9.8 * delta
-		print("velocity.y is ", velocity.y)
+		# print("velocity.y is ", velocity.y)
 		
 	if grid_map != null:
 		tile_pos_str = vector3i_to_str(tile_pos)
@@ -106,10 +111,10 @@ func _physics_process(delta: float) -> void:
 				tiles_data[tile_pos_str] = "wet"
 	
 	if dead == false and grid_map != null and tile_pos_str in tiles_data and tiles_data[tile_pos_str] == "wet":
-		speed = 10.0
+		speed = speedConst + 5.0
 		friction = 1.0
 	else:
-		speed = 5.0
+		speed = speedConst
 		friction = 15.0
 
 	# if the user presses the "death" button, die
@@ -120,9 +125,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("interact"):
 		print("interact pressed")
 		if raycast_3d.is_colliding():
-			print("raycast is colliding")
+			# print("raycast is colliding")
 			var collider = raycast_3d.get_collider()
-			print(collider)
+			# print(collider)
 			if collider is Interactable:
 				(collider as Interactable).interact(self)
 				
@@ -171,7 +176,7 @@ func _physics_process(delta: float) -> void:
 func _on_death_timer_timeout() -> void:
 	# player died, start ghost timer
 	self.set_collision_mask_value(2, true)
-	debug_text("alive again", 0.5)
+	# debug_text("alive again", 0.5)
 	respawn()
 	
 func die(death_type: PowerType) -> void:
@@ -184,7 +189,7 @@ func die(death_type: PowerType) -> void:
 	sprite_3d.texture = preload("uid://bv8fju4tqp14c")
 		
 	dead = true
-	debug_text("died")
+	# debug_text("died")
 	
 	# when we're a ghost we can phase through walls, so disable the "wall" mask
 	self.set_collision_mask_value(2, false)
@@ -202,9 +207,11 @@ func die(death_type: PowerType) -> void:
 			print("fir.")
 			fire_particles.emitting = true
 		PowerType.NONE:
-			print("back 2 nromal")
+			# print("back 2 nromal")
+			return
 		_:
-			print("idk")
+			# print("idk")
+			return
 
 func stop_all_particles():
 	water_particles.emitting = false
@@ -222,6 +229,10 @@ func respawn():
 	can_move = false
 	safe_after_death_timer.start()
 	
+	if (!firstTimeDead):
+		firstTimeDead = true;
+		print("FIRST TIME?")
+	
 func debug_text(text: String, time: float = 1):
 	debug_label.text = text
 	await get_tree().create_timer(time).timeout
@@ -229,4 +240,4 @@ func debug_text(text: String, time: float = 1):
 
 func _on_safe_after_death_timer_timeout() -> void:
 	can_move = true
-	debug_text("can move again", 1)
+	# debug_text("can move again", 1)

@@ -1,11 +1,10 @@
-[gd_scene load_steps=16 format=4 uid="uid://cyx5o6s2nkofr"]
+[gd_scene load_steps=14 format=4 uid="uid://cyx5o6s2nkofr"]
 
 [ext_resource type="Script" uid="uid://d0qs17dfvlngf" path="res://scenes/levels/tutorial/tutorial01.gd" id="1_ipkdw"]
 [ext_resource type="Shader" uid="uid://bitm1xhq6iwot" path="res://resources/pixel.gdshader" id="2_kr6ws"]
 [ext_resource type="PackedScene" uid="uid://dihhxrtwoq3o5" path="res://scenes/player.tscn" id="3_n68b8"]
 [ext_resource type="MeshLibrary" uid="uid://dlcn1pmm5chte" path="res://resources/blocks.tres" id="4_wlcag"]
 [ext_resource type="Texture2D" uid="uid://vnx00up0s45p" path="res://models/Block_Blank_Blocks_PixelArt.png" id="5_j15se"]
-[ext_resource type="PackedScene" uid="uid://b0nekt6asltut" path="res://scenes/items/soul_portal.tscn" id="6_ajkoq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e5uuo"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -67,11 +66,10 @@ shadow_mesh = SubResource("ArrayMesh_cxyqu")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_enkt8"]
 data = PackedVector3Array(-1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, -1, 1, -1, 1, -1, -1, -1, -1, 1, 1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, -1, 1, -1, 1, 1, -1, 1, 1, 1, -1, 1, 1, -1, 1, -1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_65gyt"]
-size = Vector3(10.405, 1, 10.495)
-
 [node name="World" type="Node3D"]
 script = ExtResource("1_ipkdw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Environment" type="Node" parent="."]
 
@@ -107,7 +105,7 @@ data = {
 [node name="WallGrid2" type="GridMap" parent="Map"]
 mesh_library = ExtResource("4_wlcag")
 data = {
-"cells": PackedInt32Array(7, 65535, 1048580, 6, 65535, 196612, 5, 65535, 196612, 4, 65535, 196612, 3, 65535, 196612, 2, 65535, 196612, 1, 65535, 196612, 0, 65535, 196612, 65535, 65535, 196612, 65534, 65535, 196612, 65533, 65535, 196612, 65532, 65535, 196612, 65531, 65535, 196612, 65530, 65535, 196612, 65529, 65535, 4, 65528, 65535, 4)
+"cells": PackedInt32Array(7, 65535, 1048580, 6, 65535, 196612, 5, 65535, 196612, 4, 65535, 196612, 3, 65535, 196612, 2, 65535, 196612, 1, 65535, 196612, 0, 65535, 196612, 65535, 65535, 196612, 65534, 65535, 196612, 65533, 65535, 196612, 65532, 65535, 196612, 65531, 65535, 196612, 65530, 65535, 196612, 65529, 65535, 4, 65528, 65535, 4, 65528, 6, 4, 65529, 6, 4, 65530, 6, 4, 65531, 6, 4, 65533, 6, 4, 65532, 6, 4, 65534, 6, 4, 65535, 6, 4, 0, 6, 4, 1, 6, 4, 2, 6, 4, 3, 6, 4, 4, 6, 4, 5, 6, 4, 6, 6, 4, 7, 6, 4)
 }
 
 [node name="FloorGrid" type="GridMap" parent="Map"]
@@ -201,14 +199,3 @@ collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BLOCKS/Block_Blank6/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_enkt8")
-
-[node name="NextLevelPortal" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NextLevelPortal"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.256762, -3.2356362, 2.27525)
-shape = SubResource("BoxShape3D_65gyt")
-
-[node name="SoulPortal" parent="." instance=ExtResource("6_ajkoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1322627, 0.010522962, 6.267128)
-
-[connection signal="body_entered" from="NextLevelPortal" to="." method="_on_next_level_portal_body_entered"]

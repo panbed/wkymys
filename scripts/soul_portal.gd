@@ -1,6 +1,8 @@
 extends Interactable
 @onready var gpu_particles_3d: GPUParticles3D = $GPUParticles3D
 
+var firstTimeEnter = false;
+var firstTimeEnterFlag = false;
 
 func interact(by: Node) -> void:
 	if by.dead:
@@ -17,4 +19,7 @@ func _on_body_entered(body: Node3D) -> void:
 			pos.y = 1.0
 			body.last_safe_position = pos
 			gpu_particles_3d.emitting = true
+			if (!firstTimeEnter and !firstTimeEnterFlag):
+				firstTimeEnter = true;
+				firstTimeEnterFlag = true;
 				
