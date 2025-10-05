@@ -1,0 +1,4 @@
+set {playerMove} = false
+"MYSTERIOUS VOICE": “To leave this room, you’ll need to figure out a way to power the keypad and open my Spooktastic-Puzzle-Door-3000!"
+"MYSTERIOUS VOICE": “Be careful around my upper-left-hand-corner basement exposed wires! …Or don’t be. You probably get the idea by now."
+set {playerMove} = true
