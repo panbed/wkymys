@@ -1,0 +1,4 @@
+set {playerMove} = false
+"MYSTERIOUS VOICE": “The next test involves an all-time dungeon classic\: lighting torches! But how to do that? Hmmm…”
+"MYSTERIOUS VOICE": “...You know, if you’re feeling a bit chilly, why not spend some time by my upper-left-hand-corner basement campfire?”
+set {playerMove} = true

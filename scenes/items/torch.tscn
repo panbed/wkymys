@@ -1,0 +1,109 @@
+[gd_scene load_steps=11 format=4 uid="uid://8ptqnuw2warh"]
+
+[ext_resource type="Script" uid="uid://k0g38yjsusgc" path="res://scripts/Delete.gd" id="1_cj2qm"]
+[ext_resource type="Texture2D" uid="uid://c08out45wjckd" path="res://models/asset_torch_tex_torch.png" id="2_cj2qm"]
+[ext_resource type="Script" uid="uid://cls5naxb4qrj5" path="res://scripts/torch.gd" id="3_cj2qm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8jjcn"]
+resource_name = "m_torch"
+cull_mode = 2
+albedo_color = Color(0, 0, 0, 1)
+metallic = 1.0
+emission_enabled = true
+emission_texture = ExtResource("2_cj2qm")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_3eodh"]
+_surfaces = [{
+"aabb": AABB(-0.70613533, -0.70613533, -0.70613533, 1.4122707, 7.061353, 1.4122707),
+"format": 34896613377,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAwAAAAIAAwAEAAAABQADAAIABAADAAUABAAFAAYABQACAAcABgAFAAcABAAGAAgABAAIAAAABgAHAAgAAgAJAAcAAgABAAkABwAKAAgABwAJAAoACAALAAAAAAALAAEACAAKAAsACQABAAwACgAJAA0ACQAMAA0ACwAKAA4ACgANAA4AAQALAA8AAQAPAAwACwAOAA8AEAANAAwAEQAOAA0AEQANABAAEgAPAA4AEgAOABEAEwAMAA8AEwAPABIAEAAMABMAEQAUABIAEwAVABAAEAAWABEAEQAWABQAEAAVABYAEgAUABcAEgAXABMAFgAXABQAEwAXABUAFgAVABcA"),
+"name": "m_torch",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("mRnMzJkZAAAAAMzM//8AAJkZzMxl5gAAmRkAAGXmAACZGQAAmRkAAGXmAABl5gAAZeYAAJkZAABl5szMZeYAAGXmzMyZGQAA///MzP//AAD//8zMAAAAAAAAzMwAAAAAAAAo3P//AAD//yjc//8AAP//KNwAAAAAAAAo3AAAAABl5ijcZeYAAGXmKNyZGQAAmRko3JkZAACZGSjcZeYAAAAA//8AAAAA////////AAD/////AAAAAAAA/////wAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_nk0oo"]
+resource_name = "asset_torch_Cube_001"
+_surfaces = [{
+"aabb": AABB(-0.70613533, -0.70613533, -0.70613533, 1.4122707, 7.061353, 1.4122707),
+"attribute_data": PackedByteArray("qmpVRVRl/3+qaqp6VGX/P/+fqfpUZf//qmqp+lRl/79Upf//qmpUxf+fVMVUpf+/qmqqelSl/3//n6p6VGX/f1SlVHWp2lSlqdpUdVSlVKWqqlTVVOVUpf/fVNVUpVSlVKX/f1Rl/79UZf9/VKX/v//f//9UpVTVqqr//1TlVNWqqv//VOVU1f/f//9UpVTV/99U1VSlVKWqqlTVVOVUpVRl//9VNQAAVGUAAFU1//9VNf//AAAAAFU1AAAAAP//AAD//1U1AAAAAAAAVTX//1U1//9UZQAAVTUAAFRl//9UpVR1VOX/X1Sl/19U5VR1VGX/P1SlqipUZaoqVKX/P1Sl/z9UZaoqVKWqKlRl/z9U5VR1VKX/X1Tl/19UpVR1/5+qelSl/z//n1VFVKX/f/+fVUVUZf8/qmpVRVSl/z8="),
+"format": 34896613399,
+"index_count": 132,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABgAFAAcABAAIAAUABgAHAAkACgAIAAQACQAHAAsACgALAAgACQALAAoADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUAGAAZABoAGAAbABkAHAAdAB4AHAAfAB0AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkALAAtAC4ALAAvAC0AMAAxADIAMAAzADEANAA1ADYANAA3ADUAOAA5ADoAOAA7ADkAPAA9AD4APAA/AD0AQABBAEIAQABDAEEARABFAEYARABHAEUASABJAEoASABLAEkATABNAE4ATABPAE0A"),
+"material": SubResource("StandardMaterial3D_8jjcn"),
+"name": "m_torch",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 80,
+"vertex_data": PackedByteArray("mRnMzJkZxj8AAMzM///HP5kZzMxl5po/AADMzAAAuD9l5ijcZeYYwAAAKNz//xHAmRko3GXmDcAAACjcAAANwP//KNz//w3AmRko3JkZGMBl5ijcmRkNwP//KNwAABHAmRnMzGXm/z///8zM////P2XmzMxl5v8/AADMzP///z+ZGQAAmRn/P2XmAABl5v8/ZeYAAJkZ/z+ZGQAAZeb/P2XmKNxl5jPA/////wAAM8Bl5ijcmRkzwP///////zPA/////wAA/78AAP//////vwAA//8AAP+//////////7+ZGSjcmRkWBAAA/////xYEmRko3GXmFgQAAP//AAAWBJkZKNxl5seF////////x4Vl5ijcZebHhQAA/////8eFZeYo3JkZyAUAAP//AADIBZkZKNyZGcgF/////wAAyAVl5gAAZeYAgJkZzMxl5gCAZebMzGXmAICZGQAAZeYAgGXmAACZGf+/ZebMzGXm/79l5szMmRn/v2XmAABl5v+/mRkAAJkZAABl5szMmRkAAJkZzMyZGQAAZeYAAJkZAACZGQAAZeYAAJkZzMyZGQAAmRnMzGXmAACZGQAAmRkAAAAAzMz//wAAAAAo3AAAAAAAACjc//8AAAAAzMwAAAAAAADMzAAAAAD//yjcAAAAAAAAKNwAAAAA///MzAAAAAD//8zMAAD/v///KNz///+///8o3AAA/7///8zM////v///zMz//wCAAAAo3P//AID//yjc//8AgAAAzMz//wCAZebMzGXmxj///8zMAADHP2XmzMyZGZo////MzP//uD9l5szMmRn/PwAAzMwAAP8/mRnMzJkZ/z///8zMAAD/P0kIkZBuEMh3KBVrdRYJLZJ99MCFHPs6dpT7KXdC912EQvddhH30wIWU+yl3HPs6dgAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/CHjtDwh47Q8IeO0PCHjtD////3////9/////f////38xQpt7MUKbezFCm3sxQpt7AAD/fwAA/38AAP9/AAD/fwAA/38AAP9/AAD/fwAA/3//f////3////9/////f////38AAP9/AAD/fwAA/38AAP///3////9/////f////3//P/9//z//f/8//3//P/9//z//f/8//3//P/9//z//f////3////9/////f////3//fwAA/38AAP9/AAD/fwAA/3////9/////f////3///0kIkZBuEMh3KBVrdRYJLZIAAP9/AAD/fwAA/38AAP9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_3eodh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ft5oi"]
+emission_shape_offset = Vector3(0, 1.5, 0)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 9.8, 0)
+turbulence_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bv0rj"]
+albedo_color = Color(1, 0.27058825, 0.047058824, 1)
+emission_enabled = true
+emission = Color(1.7602391, 0.25555247, 0, 1)
+grow = true
+grow_amount = 0.771
+
+[sub_resource type="BoxMesh" id="BoxMesh_bv0rj"]
+material = SubResource("StandardMaterial3D_bv0rj")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_orhx0"]
+size = Vector3(2.8113556, 2, 2.86026)
+
+[node name="Torch" type="Node3D"]
+script = ExtResource("1_cj2qm")
+
+[node name="WoodPlanks2" type="Node3D" parent="."]
+
+[node name="asset_torch" type="Node3D" parent="WoodPlanks2"]
+
+[node name="Cube" type="MeshInstance3D" parent="WoodPlanks2"]
+transform = Transform3D(0.4425497, 0, 0, 0, 0.4425497, 0, 0, 0, 0.4425497, 0, 0.3125, 0)
+mesh = SubResource("ArrayMesh_nk0oo")
+skeleton = NodePath("")
+
+[node name="FireParticles" type="GPUParticles3D" parent="WoodPlanks2/Cube"]
+transform = Transform3D(2.2596326, 0, 0, 0, 2.2596326, 0, 0, 0, 2.2596326, 0, 5.0784283, 0)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_ft5oi")
+draw_pass_1 = SubResource("BoxMesh_bv0rj")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WoodPlanks2/Cube"]
+transform = Transform3D(2.259633, 0, 0, 0, 2.259633, 0, 0, 0, 2.259633, 0, -0.70613533, 0)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WoodPlanks2/Cube/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1644977, 0)
+shape = SubResource("BoxShape3D_orhx0")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 0, 1, 0)
+collision_layer = 3
+script = ExtResource("3_cj2qm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.036720276, -0.41221505, 0.13771057)
+shape = SubResource("BoxShape3D_orhx0")
+
+[node name="FireTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Crate" type="Node3D" parent="."]
+
+[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
