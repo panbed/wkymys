@@ -30,6 +30,13 @@ directories/dtl_directory={
 "timeline3": "res://dialogs/timelines/timeline3.dtl",
 "tutorial": "res://dialogs/timelines/tutorial.dtl",
 "tutorial2": "res://dialogs/timelines/tutorial2.dtl",
+"tutorial3_1": "res://dialogs/timelines/tutorial3_1.dtl",
+"tutorial_fire01": "res://dialogs/timelines/tutorial_fire01.dtl",
+"tutorial_fire02": "res://dialogs/timelines/tutorial_fire02.dtl",
+"tutorial_fire03": "res://dialogs/timelines/tutorial_fire03.dtl",
+"tutorial_water01": "res://dialogs/timelines/tutorial_water01.dtl",
+"tutorial_water02": "res://dialogs/timelines/tutorial_water02.dtl",
+"tutorial_water03": "res://dialogs/timelines/tutorial_water03.dtl",
 "waterFreeze": "res://dialogs/timelines/waterFreeze.dtl"
 }
 layout/style_directory={

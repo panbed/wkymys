@@ -170,9 +170,11 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("interact"):
 		print("interact pressed")
 		if raycast_3d.is_colliding():
-			# print("raycast is colliding")
+			print("raycast is colliding")
 			var collider = raycast_3d.get_collider()
-			# print(collider)
+			print("collider: ", collider)
+			print("interactable check: ",collider is Interactable)
+			print("torch check:", collider is Torch)
 			if collider is Interactable:
 				(collider as Interactable).interact(self)
 		elif shape_cast_3d.is_colliding():

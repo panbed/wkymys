@@ -1,0 +1,4 @@
+set {playerMove} = false
+"MYSTERIOUS VOICE": “Not every torch has to be lit. Sometimes, they might need to be UNlit…”
+“Oh, look! You’ve discovered my upper-left-hand-corner basement pool! Care for a swim before you figure out how to open the door?”
+set {playerMove} = true

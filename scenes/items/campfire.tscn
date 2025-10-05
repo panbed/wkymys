@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://dpq68ndo4b6nu"]
+
+[ext_resource type="PackedScene" uid="uid://bk2w8vxnrde3d" path="res://models/asset_campfire.glb" id="1_sqeo7"]
+[ext_resource type="Script" uid="uid://cb57n655uyqu3" path="res://scripts/campfire.gd" id="2_sqeo7"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_sqeo7"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_f5xo5"]
+mesh = SubResource("ArrayMesh_sqeo7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h0d28"]
+emission_shape_offset = Vector3(0, 1.5, 0)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 9.8, 0)
+turbulence_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ft5oi"]
+albedo_color = Color(1, 0.27058825, 0.047058824, 1)
+emission_enabled = true
+emission = Color(1.7602391, 0.25555247, 0, 1)
+grow = true
+grow_amount = 0.771
+
+[sub_resource type="BoxMesh" id="BoxMesh_3v8io"]
+material = SubResource("StandardMaterial3D_ft5oi")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h0d28"]
+albedo_color = Color(0.27, 0.27, 0.27, 1)
+emission = Color(1.7602391, 0.25555247, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0mxam"]
+material = SubResource("StandardMaterial3D_h0d28")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dywbp"]
+size = Vector3(1.0206788, 2.585, 0.49915528)
+
+[node name="Campfire" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1.4999999, 0, 0, 0, 1.4999999, 0, 0, 0, 1.5, 0, 1, 0)
+pixel_size = 0.0025
+texture = SubResource("MeshTexture_f5xo5")
+
+[node name="FireParticles" type="GPUParticles3D" parent="Sprite3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.48780948, 0)
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_h0d28")
+draw_pass_1 = SubResource("BoxMesh_3v8io")
+
+[node name="SmokeParticles" type="GPUParticles3D" parent="Sprite3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.48780948, 0)
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_h0d28")
+draw_pass_1 = SubResource("BoxMesh_0mxam")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.228261, 0.8034828, 1.0906572)
+script = ExtResource("2_sqeo7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.99999315, 0, 0, 0, 0.99999315, 0, 0, 0, 0.9999999, -0.5410206, 0, -0.57169926)
+shape = SubResource("BoxShape3D_dywbp")
+debug_color = Color(0.7078504, 0.48789626, 0, 0.41960785)
+
+[node name="asset_campfire" parent="." instance=ExtResource("1_sqeo7")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.3952569, -0.10241269, 0, 0.004831887)
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
