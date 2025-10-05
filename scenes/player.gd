@@ -75,7 +75,7 @@ func create_puddle(tile_pos: Vector3i):
 
 	print(tile_pos_id)
 	#if tile_names["water"] != tile_pos_id:
-	puddle.global_transform.origin = world_pos + Vector3(0, 2, 0)
+	puddle.global_transform.origin = world_pos + Vector3(0, 1.25, 0)
 	get_parent().add_child(puddle)
 
 

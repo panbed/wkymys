@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c74fm7oahjaif"]
+[gd_scene load_steps=19 format=3 uid="uid://c74fm7oahjaif"]
 
 [ext_resource type="Script" uid="uid://c5gdqk6b3kua6" path="res://scenes/levels/level4a/level_4a.gd" id="1_8suf6"]
 [ext_resource type="Shader" uid="uid://bitm1xhq6iwot" path="res://resources/pixel.gdshader" id="2_lscha"]
@@ -33,7 +33,11 @@ size = Vector3(13.187988, 1, 21.632874)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jxyg8"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fm2ri"]
+albedo_color = Color(0.20392157, 0.13725491, 0.22352941, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_0a8qv"]
+material = SubResource("StandardMaterial3D_fm2ri")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_65gyt"]
 size = Vector3(10.405, 1, 10.495)
