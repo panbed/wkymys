@@ -23,13 +23,10 @@ Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 [dialogic]
 
 directories/dch_directory={
-"MYSTERIOUS VOICE": "res://MYSTERIOUS VOICE.dch",
 "test": "res://dialogs/characters/test.dch"
 }
 directories/dtl_directory={
-"timeline3": "res://dialogs/timelines/timeline3.dtl",
 "tutorial": "res://dialogs/timelines/tutorial.dtl",
-"tutorial2": "res://dialogs/timelines/tutorial2.dtl"
 "waterFreeze": "res://dialogs/timelines/waterFreeze.dtl"
 }
 layout/style_directory={
@@ -71,11 +68,6 @@ audio/channel_defaults={
 }
 layout/style_list=["res://dialogs/themes/normal.tres"]
 layout/default_style="res://dialogs/themes/normal.tres"
-glossary/default_case_sensitive=true
-variables={
-"playerMove": false,
-"soulPortalReveal": false
-}
 
 [display]
 

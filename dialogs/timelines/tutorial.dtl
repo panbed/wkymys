@@ -1,15 +1,3 @@
-# PLAYER CANNOT MOVE WHEN THIS DIALOGUE TIMELINE STARES
-"MYSTERIOUS VOICE": "Is this thing on...?"
-"MYSTERIOUS VOICE": "Ahem..."
-"MYSTERIOUS VOICE": "Hello, hello! You’re probably wondering why you’re here."
-"MYSTERIOUS VOICE": “Well… you died! HAHAHA!”
-"MYSTERIOUS VOICE": “Fortunately - or unfortunately, depending on how you look at it - for you, the afterlife is currently full. So, I’ve put together a little game for the wandering souls out there, and it happens to be your turn.”
-"MYSTERIOUS VOICE": “Get through my house of puzzles and you can have your life back!”
-# dialogue pauses in code until player moves around a bit first
-set {playerMove} = true
-[wait time="3.5"]
-set {playerMove} = false
-"MYSTERIOUS VOICE": “What’s that? You’re stuck? …Think again!”
-"MYSTERIOUS VOICE": “You currently exist in a half-state somewhere between the mortal and spiritual planes. With this state comes the unique ability to shift between a bodily and ghostly form."
-"MYSTERIOUS VOICE": "Try it now by pressing the Z key and those pesky bars will pesk you no more!”
-set {playerMove} = true
+test: test!
+test: Hello, world!
+test: i am a thing

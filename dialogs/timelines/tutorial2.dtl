@@ -1,7 +1,0 @@
-set {playerMove} = false
-"MYSTERIOUS VOICE": “Oh, right… You can only stay in that form for a short amount of time. Then you’ll go back to your body.”
-"MYSTERIOUS VOICE": “BUT! If you’re able to reach one of these in your ghost form,”
-set {soulPortalReveal} = true
-[wait time="0.5" hide_text="false"]
-"MYSTERIOUS VOICE": “Your body will teleport to that spot!”
-set {playerMove} = true
