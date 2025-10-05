@@ -7,6 +7,7 @@ class_name Player
 @onready var sprite_3d: AnimatedSprite3D = $AnimatedSprite3D
 @onready var power_label: Label3D = $PowerLabel
 @onready var raycast_3d: RayCast3D = $RayCast3D
+@onready var shape_cast_3d: ShapeCast3D = $ShapeCast3D
 
 @onready var water_particles: GPUParticles3D = $WaterParticles
 @onready var fire_particles: GPUParticles3D = $FireParticles
@@ -174,6 +175,15 @@ func _physics_process(delta: float) -> void:
 			# print(collider)
 			if collider is Interactable:
 				(collider as Interactable).interact(self)
+		elif shape_cast_3d.is_colliding():
+			for ci in shape_cast_3d.get_collision_count():
+				var collider = shape_cast_3d.get_collider(ci)
+				print(collider)
+				
+				if collider is Interactable:
+					(collider as Interactable).interact(self)
+			
+			
 				
 		# reset level
 	if Input.is_action_just_pressed("reset"):

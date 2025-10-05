@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dihhxrtwoq3o5"]
+[gd_scene load_steps=33 format=3 uid="uid://dihhxrtwoq3o5"]
 
 [ext_resource type="Script" uid="uid://b63k55wvnl66g" path="res://scenes/player.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://b3sv12nfs0hx3" path="res://images/particles/particle_water_droplet.png" id="3_qhqgy"]
@@ -183,6 +183,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_tuyoq"]
+size = Vector3(1.5, 1.5, 1.5)
+
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 top_level = true
@@ -204,6 +207,7 @@ font = SubResource("SystemFont_3vyb7")
 font_size = 64
 
 [node name="SafeAfterDeathTimer" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true
 
 [node name="PowerLabel" type="Label3D" parent="."]
@@ -236,8 +240,16 @@ draw_pass_1 = SubResource("QuadMesh_y4r1p")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(0.185, 0, 0, 0, 0.185, 0, 0, 0, 0.185, 0.03657019, 0.046403825, -0.017245233)
+billboard = 1
 sprite_frames = SubResource("SpriteFrames_y4r1p")
-animation = &"float"
+animation = &"idle"
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+shape = SubResource("BoxShape3D_tuyoq")
+target_position = Vector3(0, 0, 0)
+collide_with_areas = true
+collide_with_bodies = false
 
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
 [connection signal="timeout" from="SafeAfterDeathTimer" to="." method="_on_safe_after_death_timer_timeout"]

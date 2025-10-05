@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cxk0iwrc83rpc" path="res://scripts/Keypad.gd" id="2_a2dm1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dywbp"]
-size = Vector3(1.925, 2.585, 4.465)
+size = Vector3(1.4202149, 1.4175, 0.6771436)
 
 [node name="PowerSocket" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, 0, 0, 0)
@@ -19,6 +19,6 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.228261, 0.8034828, 1.090657
 script = ExtResource("2_a2dm1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0.2095499, 0, -1.8566003)
+transform = Transform3D(0.9999763, 0, 0, 0, 0.9999763, 0, 0, 0, 0.9999999, 0.17397219, 0.5837401, 0.32929462)
 shape = SubResource("BoxShape3D_dywbp")
 debug_color = Color(0.7078504, 0.48789626, 0, 0.41960785)

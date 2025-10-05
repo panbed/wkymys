@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cowhs7xyg3cf4"]
+[gd_scene load_steps=14 format=3 uid="uid://cymo4xshnlbqh"]
 
 [ext_resource type="Script" uid="uid://o3us10x25aus" path="res://scenes/levels/level3/level_3.gd" id="1_orhx0"]
 [ext_resource type="Shader" uid="uid://bitm1xhq6iwot" path="res://resources/pixel.gdshader" id="2_hjakd"]
@@ -81,7 +81,7 @@ goto_scene = "res://scenes/world.tscn"
 [node name="Interactables" type="Node" parent="."]
 
 [node name="Stove" parent="Interactables" instance=ExtResource("5_mguho")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, -10.358472, 0, -2.4140687)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, -6.7544394, -0.917891, 1.8353238)
 
 [node name="Boxes" type="Node" parent="Interactables"]
 
@@ -128,7 +128,7 @@ transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 4.787281, 1.0386238,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2563666, 1.0386238, 16.809679)
 
 [node name="Sink" parent="Interactables" instance=ExtResource("7_orhx0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, -13.66312, 0, -2.5399146)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, -12.871318, -1.4941382, -4.5116324)
 
 [node name="Doors" type="Node" parent="."]
 

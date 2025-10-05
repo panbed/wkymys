@@ -1,7 +1,7 @@
 extends Interactable
 
 @onready var player: CharacterBody3D = $Player
-const PowerType = preload("uid://c7iq8laid2oq5").PowerType
+const PowerType = PowerTypes.PowerType
 @onready var fire_particles: GPUParticles3D = $"../WoodPlanks2/Cube/FireParticles"
 
 @onready var fire_timer: Timer = $"../FireTimer"
@@ -25,3 +25,9 @@ func ignite() -> void:
 	fire_particles.emitting = true
 	fire_timer.start()
 	print("Box is on fire!")
+
+
+func _on_body_entered(body: Node3D) -> void:
+	if body.is_in_group("player"):
+		if body.active_power == PowerType.FIRE:
+			ignite()

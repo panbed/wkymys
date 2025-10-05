@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c21tls6n3tmiv"]
+
+[ext_resource type="Script" uid="uid://tyyf4y4gipp4" path="res://scripts/death_fall.gd" id="1_ytlvv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7m73b"]
+size = Vector3(13.187988, 1, 21.632874)
+
+[node name="Area3D" type="Area3D"]
+script = ExtResource("1_ytlvv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.767334, -2.871545, 10.316437)
+shape = SubResource("BoxShape3D_7m73b")

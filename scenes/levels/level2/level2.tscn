@@ -96,9 +96,6 @@ material = SubResource("ShaderMaterial_k0juu")
 [node name="Player" parent="." node_paths=PackedStringArray("grid_map") instance=ExtResource("3_s1818")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.329891, 1.4890038, 7)
 grid_map = NodePath("../Map/FloorGrid")
-speed = null
-acceleration = null
-friction = null
 
 [node name="Map" type="Node" parent="."]
 

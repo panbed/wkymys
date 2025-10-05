@@ -103,4 +103,5 @@ one_shot = true
 
 [node name="Crate" type="Node3D" parent="."]
 
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
 [connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]

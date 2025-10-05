@@ -8,12 +8,6 @@ extends Node3D
 # func keypad_broken() -> void:
 # 	print("deleting")e
 # 	doors.queue_free()
-
-func _ready() -> void:
-	if Dialogic.current_timeline != null:
-		return
-	
-	Dialogic.start('tutorial')
 	
 
 func _on_next_level_portal_body_entered(body: Node3D) -> void:
