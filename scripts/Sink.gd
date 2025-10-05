@@ -2,6 +2,8 @@ extends Interactable
 
 #@onready var player: CharacterBody3D = $"../../../Player"
 const PowerType = PowerTypes.PowerType
+@onready var audio_stream_player: AudioStreamPlayer = $"../AudioStreamPlayer"
+@onready var water: MeshInstance3D = $"../water"
 
 var sink_running: bool = false
 var sink_fill: float = 0.0
@@ -14,6 +16,8 @@ func _process(delta: float) -> void:
 			sink_fill = 1.0
 			sink_running = false
 			print("sink is full!")
+			water.show()
+			
 
 func interact(by: Node) -> void:
 	print("sink interact")
@@ -24,5 +28,7 @@ func interact(by: Node) -> void:
 
 		if sink_fill >= 1.0:
 			by.die(PowerType.WATER)
+		else:
+			audio_stream_player.play()
 	else:
 		print("you cant do anything since youre a ghost")

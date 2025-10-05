@@ -81,7 +81,7 @@ goto_scene = "res://scenes/world.tscn"
 [node name="Interactables" type="Node" parent="."]
 
 [node name="Stove" parent="Interactables" instance=ExtResource("5_mguho")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, -10.358472, 0, -2.4140687)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, -10.358472, -1.568265, -4.3694997)
 
 [node name="Boxes" type="Node" parent="Interactables"]
 
@@ -128,7 +128,7 @@ transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 4.787281, 1.0386238,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2563666, 1.0386238, 16.809679)
 
 [node name="Sink" parent="Interactables" instance=ExtResource("7_orhx0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, -13.66312, 0, -2.5399146)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, -13.66312, -1.534349, -4.489419)
 
 [node name="Doors" type="Node" parent="."]
 
