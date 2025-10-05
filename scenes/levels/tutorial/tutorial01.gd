@@ -12,13 +12,13 @@ var secondTutorial: bool = false
 func _ready() -> void:
 	Dialogic.start('tutorial')
 	# Dialogic.paused = true
-	player.speedConst = 0;
+	player.speed = 0.0;
 	
 func _process(delta) -> void:
 	if (!Dialogic.VAR.playerMove):
-		player.speedConst = 0;
+		player.speed = 0.0;
 	else:
-		player.speedConst = 5;
+		player.speed = 5.0;
 		
 	if (player.firstTimeDead and !secondTutorial):
 		Dialogic.start('tutorial2')

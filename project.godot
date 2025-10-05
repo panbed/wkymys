@@ -29,7 +29,7 @@ directories/dch_directory={
 directories/dtl_directory={
 "timeline3": "res://dialogs/timelines/timeline3.dtl",
 "tutorial": "res://dialogs/timelines/tutorial.dtl",
-"tutorial2": "res://dialogs/timelines/tutorial2.dtl"
+"tutorial2": "res://dialogs/timelines/tutorial2.dtl",
 "waterFreeze": "res://dialogs/timelines/waterFreeze.dtl"
 }
 layout/style_directory={
