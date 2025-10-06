@@ -120,3 +120,5 @@ func pulse_green():
 
 func _on_next_level_portal_body_entered(body: Node3D) -> void:
 	print("level thing...")
+	if body.name == "Player" and not player.dead:
+		get_tree().change_scene_to_file("res://scenes/FINALSCENE.tscn")
