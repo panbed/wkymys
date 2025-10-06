@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://kr7ff3j3b6n1"]
+
+[ext_resource type="Script" uid="uid://du1yjhlxhw3qs" path="res://scripts/FINALSCRIPT.gd" id="1_nxx3j"]
+
+[node name="Finalscene" type="Node2D"]
+script = ExtResource("1_nxx3j")
