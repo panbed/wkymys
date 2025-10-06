@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://qh5mgxvoxvx7"]
+[gd_scene load_steps=19 format=3 uid="uid://qh5mgxvoxvx7"]
 
 [ext_resource type="Script" uid="uid://c5gdqk6b3kua6" path="res://scenes/levels/level4a/level_4a.gd" id="1_ljsf8"]
 [ext_resource type="Shader" uid="uid://bitm1xhq6iwot" path="res://resources/pixel.gdshader" id="2_6kpf4"]
 [ext_resource type="PackedScene" uid="uid://dw1q8kn7fqu4f" path="res://scenes/items/sink.tscn" id="3_k11wq"]
 [ext_resource type="PackedScene" uid="uid://dihhxrtwoq3o5" path="res://scenes/player.tscn" id="4_cty1b"]
+[ext_resource type="AudioStream" uid="uid://d2c03a3imin0y" path="res://resources/music/song3.mp3" id="4_ljsf8"]
 [ext_resource type="MeshLibrary" uid="uid://dlcn1pmm5chte" path="res://resources/blocks.tres" id="5_gg0rk"]
 [ext_resource type="PackedScene" uid="uid://cuslu0eckdr6n" path="res://scenes/items/keypad.tscn" id="7_la6kx"]
 [ext_resource type="PackedScene" uid="uid://35lf2kesbgdv" path="res://scenes/items/wires.tscn" id="8_vjnk4"]
@@ -64,6 +65,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 2.53, -21.998215, -1.4107628, -4
 transform = Transform3D(1, 0, 0, 0, 0.75674415, 0.65371126, 0, -0.65371126, 0.75674415, -7.0357094, 15.746824, 24.954409)
 projection = 1
 size = 29.02
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Environment"]
+stream = ExtResource("4_ljsf8")
+volume_db = 10.0
+autoplay = true
 
 [node name="Player" parent="." node_paths=PackedStringArray("grid_map") instance=ExtResource("4_cty1b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.044668, 1.4890038, 21.189215)

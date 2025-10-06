@@ -383,6 +383,7 @@ skeleton = NodePath("")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_cxtjg")
+volume_db = -11.45
 
 [node name="water" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.99999934, 0, 0, 0, 0.99999934, 0, 0, 0, 0.9999999, 1.4316015, 2.8555136, 2.3343396)

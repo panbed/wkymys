@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=4 uid="uid://cyx5o6s2nkofr"]
+[gd_scene load_steps=17 format=4 uid="uid://cyx5o6s2nkofr"]
 
 [ext_resource type="Script" uid="uid://d0qs17dfvlngf" path="res://scenes/levels/tutorial/tutorial01.gd" id="1_ipkdw"]
 [ext_resource type="Shader" uid="uid://bitm1xhq6iwot" path="res://resources/pixel.gdshader" id="2_kr6ws"]
+[ext_resource type="AudioStream" uid="uid://bp1qjx3iyj3el" path="res://resources/music/song1.mp3" id="3_6ktik"]
 [ext_resource type="PackedScene" uid="uid://dihhxrtwoq3o5" path="res://scenes/player.tscn" id="3_n68b8"]
 [ext_resource type="MeshLibrary" uid="uid://dlcn1pmm5chte" path="res://resources/blocks.tres" id="4_wlcag"]
 [ext_resource type="Texture2D" uid="uid://vnx00up0s45p" path="res://models/Block_Blank_Blocks_PixelArt.png" id="5_j15se"]
@@ -92,6 +93,10 @@ size = 22.598
 
 [node name="PixelFilter" type="CanvasModulate" parent="Environment"]
 material = SubResource("ShaderMaterial_k0juu")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Environment"]
+stream = ExtResource("3_6ktik")
+autoplay = true
 
 [node name="Player" parent="." node_paths=PackedStringArray("grid_map") instance=ExtResource("3_n68b8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.329891, 1.4890038, 7)

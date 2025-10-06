@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dek5b4atocsou"]
+[gd_scene load_steps=14 format=3 uid="uid://dek5b4atocsou"]
 
 [ext_resource type="Script" uid="uid://o3us10x25aus" path="res://scenes/levels/level3/level_3.gd" id="1_orhx0"]
 [ext_resource type="Shader" uid="uid://bitm1xhq6iwot" path="res://resources/pixel.gdshader" id="2_hjakd"]
 [ext_resource type="PackedScene" uid="uid://dihhxrtwoq3o5" path="res://scenes/player.tscn" id="3_5fsi0"]
+[ext_resource type="AudioStream" uid="uid://d2c03a3imin0y" path="res://resources/music/song3.mp3" id="3_hjakd"]
 [ext_resource type="MeshLibrary" uid="uid://dlcn1pmm5chte" path="res://resources/blocks.tres" id="4_nfwes"]
 [ext_resource type="PackedScene" uid="uid://bi6m4huv17qs" path="res://scenes/items/stove.tscn" id="5_mguho"]
 [ext_resource type="PackedScene" uid="uid://cmpllywqffbt1" path="res://scenes/items/flammable_box.tscn" id="6_ohtdt"]
@@ -49,6 +50,11 @@ size = 22.598
 
 [node name="PixelFilter" type="CanvasModulate" parent="Environment"]
 material = SubResource("ShaderMaterial_k0juu")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Environment"]
+stream = ExtResource("3_hjakd")
+volume_db = 10.0
+autoplay = true
 
 [node name="Player" parent="." node_paths=PackedStringArray("grid_map") instance=ExtResource("3_5fsi0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.697208, 1.4890038, 13.501634)
