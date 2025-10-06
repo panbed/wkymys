@@ -1,0 +1,9 @@
+[style name="normal"]
+set {playerMove} = false
+join DUCKY center [animation="Slide In Down" length="0.75" wait="true"]
+DUCKY: “BWAHAHAHA!”
+DUCKY: “Got a little greedy going after my surreptitiously-placed giant treasure chest, did you?”
+DUCKY: “Well, unfortunately for you…”
+DUCKY: “The devs– er, I ran out of time to craft more puzzles for you. So our fun has come to an end.”
+DUCKY: “Until next time, my little half-ghostie friend!”
+set {endGame} = true
