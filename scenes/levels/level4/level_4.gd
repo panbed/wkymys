@@ -116,3 +116,7 @@ func pulse_green():
 	var mat = siren_mesh.get_active_material(1)
 	siren_mesh.set_surface_override_material(1, mat)
 	mat.albedo_color = Color(0.0, 0.604, 0.268, 1.0)
+
+
+func _on_next_level_portal_body_entered(body: Node3D) -> void:
+	print("level thing...")
