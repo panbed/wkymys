@@ -3,3 +3,4 @@ set {playerMove} = false
 "MYSTERIOUS VOICE": "But can you figure out how to escape the rest of my Maniacal Manor?"
 "MYSTERIOUS VOICE": "I'll be watching to find out! HAHAHA!"
 set {playerMove} = true
+[signal arg="elec_done"]

@@ -3,7 +3,7 @@ class_name Player
 
 @onready var death_timer: Timer = $DeathTimer
 @onready var safe_after_death_timer: Timer = $SafeAfterDeathTimer
-@onready var debug_label: Label3D = $DebugLabel
+#@onready var debug_label: Label3D = $DebugLabel
 @onready var sprite_3d: AnimatedSprite3D = $AnimatedSprite3D
 @onready var power_label: Label3D = $PowerLabel
 @onready var raycast_3d: RayCast3D = $RayCast3D
@@ -81,17 +81,17 @@ func create_puddle(tile_pos: Vector3i):
 
 func _physics_process(delta: float) -> void:
 	# DEBUG: change text of power label
-	match active_power:
-		PowerType.NONE:
-			power_label.text = "None"
-		PowerType.FIRE:
-			power_label.text = "Fire"
-		PowerType.WATER:
-			power_label.text = "Water"
-		PowerType.ELECTRIC:
-			power_label.text = "Electric"
-		_:
-			power_label.text = "????????"
+	#match active_power:
+		#PowerType.NONE:
+			#power_label.text = "None"
+		#PowerType.FIRE:
+			#power_label.text = "Fire"
+		#PowerType.WATER:
+			#power_label.text = "Water"
+		#PowerType.ELECTRIC:
+			#power_label.text = "Electric"
+		#_:
+			#power_label.text = "????????"
 
 	# get the current tile underneath the player
 	if grid_map != null:
@@ -148,8 +148,8 @@ func _physics_process(delta: float) -> void:
 		tile_pos_str = vector3i_to_str(tile_pos)
 
 	# DEBUG button:
-	if Input.is_action_just_pressed("debug"):
-		die(PowerType.FIRE)
+	#if Input.is_action_just_pressed("debug"):
+		#die(PowerType.FIRE)
 
 	# handle powers
 	match active_power:
@@ -252,9 +252,10 @@ func respawn():
 		print("FIRST TIME?")
 
 func debug_text(text: String, time: float = 1):
-	debug_label.text = text
-	await get_tree().create_timer(time).timeout
-	debug_label.text = ""
+	#debug_label.text = text
+	#await get_tree().create_timer(time).timeout
+	#debug_label.text = ""
+	print("bleh")
 
 func _on_safe_after_death_timer_timeout() -> void:
 	can_move = true

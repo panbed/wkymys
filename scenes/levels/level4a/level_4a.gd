@@ -4,8 +4,6 @@ extends Node3D
 @onready var doors: Node = $Doors
 @onready var keypad: Node3D = $Map/Keypad/Area3D
 
-
-
 # func _ready() -> void:
 # 	keypad.keypad_broken.connect(Callable(self, "keypad_broken"))
 
@@ -32,7 +30,7 @@ func keypad_broken() -> void:
 
 func _on_next_level_portal_body_entered(body: Node3D) -> void:
 	if body.name == "Player" and not player.dead:
-		get_tree().change_scene_to_file("res://scenes/world.tscn")
+		get_tree().change_scene_to_file("res://scenes/levels/level4/level4.tscn")
 
 
 func _on_death_area_body_entered(body: Node3D) -> void:

@@ -141,5 +141,6 @@ shape = SubResource("ConcavePolygonShape3D_86vct")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_ppwfo")
+volume_db = -9.541
 
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]

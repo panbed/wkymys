@@ -36,3 +36,9 @@ func spawnSoulPortal() -> void:
 	node.set_name("SoulPortal")
 	add_child(node)
 	node.global_transform.origin = Vector3(2.132, 0.011, 6.26)
+
+
+func _on_next_level_body_entered(body: Node3D) -> void:
+	# goto the next level lol
+	if body.is_in_group("player") and not player.dead:
+		get_tree().change_scene_to_file("res://scenes/levels/tutorial/tutorial02.tscn")

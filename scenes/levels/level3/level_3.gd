@@ -8,8 +8,7 @@ extends Node3D
 # func keypad_broken() -> void:
 # 	print("deleting")e
 # 	doors.queue_free()
-	
 
 func _on_next_level_portal_body_entered(body: Node3D) -> void:
 	if body.name == "Player" and not player.dead:
-		get_tree().change_scene_to_file("res://scenes/world.tscn")
+		get_tree().change_scene_to_file("res://scenes/levels/level4a/level4_a.tscn")

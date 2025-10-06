@@ -1,5 +1,8 @@
+set {playerMove} = false
 "MYSTERIOUS VOICE": "Wow, you did it! Look at Mister Hot Stuff over here!"
 "MYSTERIOUS VOICE": "Or, uh... Missus Hot Stuff! Or if you're nonbinary, then, um, I guess... Mistus Hot Stuff? Miser? Hm..."
 "MYSTERIOUS VOICE": "Look at [your preferred gender identifier] Hot Stuff over here!"
 "MYSTERIOUS VOICE": "..."
 "MYSTERIOUS VOICE": "Moving on to the next room!"
+set {playerMove} = true
+[signal arg="fire_finished"]
